@@ -1,21 +1,20 @@
-from pathlib import Path
+import os.path
 
 
 def main():
-    print("Part 1 Solution:", _part_1())
-    print("Part 2 Solution:", _part_2())
+    print("Part 1 Solution: " + str(_part_1()))
+    print("Part 2 Solution: " + str(_part_2()))
 
 
 def _expenses():
-    return {
-        int(amount)
-        for index, amount in enumerate(
-            (Path().absolute() / "assets/expenses").read_text().splitlines()
-        )
-    }
+    with open(os.path.join(os.path.abspath('.'), "assets/expenses")) as f:
+        return {
+            int(amount)
+            for amount in f.read().splitlines()
+        }
 
 
-def _find_pairs_product(*, expenses, target_sum):
+def _find_pairs_product(expenses, target_sum):
     while expenses:
         expense = expenses.pop()
         matching_expense = target_sum - expense
