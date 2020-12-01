@@ -7,11 +7,8 @@ def main():
 
 
 def _expenses():
-    with open(os.path.join(os.path.abspath('.'), "assets/expenses")) as f:
-        return {
-            int(amount)
-            for amount in f.read().splitlines()
-        }
+    with open(os.path.join(os.path.abspath("."), "assets/expenses")) as f:
+        return {int(amount) for amount in f.read().splitlines()}
 
 
 def _find_pairs_product(expenses, target_sum):
