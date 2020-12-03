@@ -1,7 +1,6 @@
 import os.path
 
 
-
 def main():
     print("Solution to Part 1: " + _part_1())
     print("Solution to Part 2: " + _part_2())
@@ -18,11 +17,11 @@ def _part_2():
     even_row_trees = [t for i, t in enumerate(trees) if i % 2 == 0]
 
     return str(
-        (_trees_hit(trees, 1))
-        * (_trees_hit(trees, 3))
-        * (_trees_hit(trees, 5))
-        * (_trees_hit(trees, 7))
-        * (_trees_hit(even_row_trees, 1))
+        _trees_hit(trees, 1)
+        * _trees_hit(trees, 3)
+        * _trees_hit(trees, 5)
+        * _trees_hit(trees, 7)
+        * _trees_hit(even_row_trees, 1)
     )
 
 
@@ -37,8 +36,9 @@ def _trees_hit(trees, travel_per_row):
 
 
 def _trees():
-    with open(os.path.join(os.path.abspath('.'), 'input')) as f:
+    with open(os.path.join(os.path.abspath("."), "input")) as f:
         return f.read().splitlines()
+
 
 if __name__ == "__main__":
     main()
