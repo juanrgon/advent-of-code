@@ -29,10 +29,10 @@ def _part_2():
 def _trees_hit(trees, travel_per_row):
     position = 0
     trees_hit = 0
-    for row in trees[1:]:
-        position += travel_per_row
+    for row in trees:
         if row[position % len(row)] == "#":
             trees_hit += 1
+        position += travel_per_row
     return trees_hit
 
 
