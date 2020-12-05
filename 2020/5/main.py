@@ -1,16 +1,5 @@
-from collections import Counter, defaultdict
-import re
-from pathlib import Path
-import requests
-from itertools import cycle
 import __main__
 import os.path
-import attr
-
-
-@attr.s(auto_attribs=True)
-class A:
-    a: int
 
 
 def main():
