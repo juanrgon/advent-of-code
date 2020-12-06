@@ -12,9 +12,9 @@ def _part_1():
     _input()
 
     total = 0
-    for g in _input().split("\n\n"):
+    for group in _input().split("\n\n"):
         yes = set()
-        for question in g.replace("\n", ""):
+        for question in group.replace("\n", ""):
             yes.add(question)
         total += len(yes)
     return str(total)
