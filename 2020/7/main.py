@@ -48,10 +48,10 @@ def _bags():
     for i in _input().split(".\n")[:-1]:
         bag, contains = i.split(" bags contain ")
         for desc in contains.split(", "):
-            if desc == "no other bags":
+            match = re.match(r"(\d) (.*) bags?", desc)
+            if not match:
                 continue
 
-            match = re.match(r"(\d) (.*) bags?", desc)
             count = match.group(1)
             color = match.group(2)
 
