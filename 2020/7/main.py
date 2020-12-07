@@ -40,16 +40,18 @@ def _part_2():
 def _bags():
     bags = defaultdict(Bag)
     for i in _input().split(".\n")[:-1]:
-        bag, contains = i.split(" bags contain ")
+        color, contains = i.split(' bags contain ')
+        bag = bags[color]
         for desc in contains.split(", "):
             match = re.match(r"(\d) (.*) bags?", desc)
             if not match:
                 continue
 
-            count = match.group(1)
+            count = int(match.group(1))
             color = match.group(2)
 
-            bags[bag].subbags[bags[color]] = int(count)
+            subbag = bags[color]
+            bag.subbags[subbag] = count
     return bags
 
 
