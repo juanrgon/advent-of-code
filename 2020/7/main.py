@@ -32,8 +32,8 @@ class Bag:
 def _part_1():
     bags = _bags()
     total = 0
-    for b in bags.values():
-        if b.contains(bags["shiny gold"]):
+    for bag in bags.values():
+        if bag.contains(bags["shiny gold"]):
             total += 1
     return total
 
