@@ -50,8 +50,7 @@ def _bags():
             count = int(match.group(1))
             color = match.group(2)
 
-            subbag = bags[color]
-            bag.subbags[subbag] = count
+            bag.subbags[bags[color]] = count
     return bags
 
 
