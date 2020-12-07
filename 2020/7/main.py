@@ -15,11 +15,8 @@ class Bag:
 
     def contains(self, target):
         for bag in self.subbags:
-            if bag == target:
+            if bag == target or bag.contains(target):
                 return True
-            elif bag.contains(target):
-                return True
-
         return False
 
     def total_subbags(self):
