@@ -54,6 +54,7 @@ def _bags():
             match = re.match("(\d) (.*) bags?", desc)
             count = match.group(1)
             color = match.group(2)
+
             bags[bag].subbags[bags[color]] = int(count)
     return bags
 
