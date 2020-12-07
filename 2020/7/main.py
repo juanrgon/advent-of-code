@@ -51,7 +51,7 @@ def _bags():
             if desc == "no other bags":
                 continue
 
-            match = re.match("(\d) (.*) bags?", desc)
+            match = re.match(r"(\d) (.*) bags?", desc)
             count = match.group(1)
             color = match.group(2)
 
