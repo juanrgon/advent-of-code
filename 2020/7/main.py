@@ -11,7 +11,7 @@ def main():
 
 class Bag:
     def __init__(self):
-        self.subbags = defaultdict(Bag)
+        self.subbags = dict()
 
     def contains(self, target):
         for bag in self.subbags:
