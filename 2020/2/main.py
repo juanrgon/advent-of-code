@@ -36,6 +36,7 @@ def _get_input():
     with open(os.path.join(os.path.abspath("."), "input")) as f:
         return f.read().splitlines()
 
+
 def _multisplit(string, *delimiters):
     return re.split("|".join([re.escape(d) for d in delimiters]), string)
 

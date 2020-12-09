@@ -3,23 +3,15 @@ from collections import Counter
 
 
 def main():
-    print("Solution to Part 1: " + _part_1())
-    print("Solution to Part 2: " + _part_2())
+    print("Solution to Part 1: " + str(_part_1()))
+    print("Solution to Part 2: " + str(_part_2()))
 
 
 def _part_1():
-    _input()
-
-    total = 0
-    for group in _input().split("\n\n"):
-        yes = set(group.replace('\n', ''))
-        total += len(yes)
-    return str(total)
+    return sum(len(set(g.replace("\n", ""))) for g in _input().split("\n\n"))
 
 
 def _part_2():
-    _input()
-
     total = 0
     for group in _input().split("\n\n"):
         all_yes = set()

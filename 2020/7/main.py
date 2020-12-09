@@ -39,7 +39,7 @@ def _part_2():
 
 def _bags():
     bags = defaultdict(Bag)
-    for i in _input().split(".\n")[:-1]:
+    for i in _input().split(".\n"):
         color, contains = i.split(' bags contain ')
         bag = bags[color]
         for desc in contains.split(", "):
@@ -56,7 +56,7 @@ def _bags():
 
 def _input():
     with open(os.path.join(os.path.dirname(__main__.__file__), "input")) as f:
-        return f.read()
+        return f.read().strip()
 
 
 if __name__ == "__main__":
