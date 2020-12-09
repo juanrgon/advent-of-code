@@ -1,9 +1,4 @@
 import os.path
-from collections import defaultdict
-import __main__
-import re
-from itertools import *
-from collections import *
 
 
 def main():
