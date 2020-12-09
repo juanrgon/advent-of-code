@@ -1,6 +1,5 @@
 import os.path
 from collections import Counter
-import __main__
 
 
 def main():
@@ -13,9 +12,7 @@ def _part_1():
 
     total = 0
     for group in _input().split("\n\n"):
-        yes = set()
-        for question in group.replace("\n", ""):
-            yes.add(question)
+        yes = set(group.replace('\n', ''))
         total += len(yes)
     return str(total)
 
@@ -34,7 +31,7 @@ def _part_2():
 
 
 def _input():
-    with open(os.path.join(os.path.dirname(__main__.__file__), "input")) as f:
+    with open(os.path.join(os.path.dirname(__file__), "input")) as f:
         return f.read()
 
 
