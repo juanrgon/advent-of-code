@@ -25,18 +25,18 @@ def _part_2():
     nums = [int(i) for i in _input().split()]
     nums.append(0)
     nums.append(max(nums) + 3)
-    return possible_combos(tuple(sorted(nums)))
+    return chains(tuple(sorted(nums)))
 
 
 @lru_cache()
-def possible_combos(nums):
+def chains(nums):
     if len(nums) == 1:
         return 1
 
     count = 0
     for i in range(1, len(nums)):
         if nums[i] - nums[0] <= 3:
-            count += possible_combos(tuple(nums[i:]))
+            count += chains(tuple(nums[i:]))
         else:
             break
     return count
