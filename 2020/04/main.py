@@ -96,7 +96,7 @@ def _part_1():
     valid = 0
     for raw_passport in raw_passports:
         try:
-            passport = Passport._from_raw_text(raw_passport)
+            Passport._from_raw_text(raw_passport)
         except TypeError:
             continue
         else:
