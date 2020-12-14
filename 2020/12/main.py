@@ -78,11 +78,6 @@ class Ship:
             self.velocity += amt * WEST
 
 
-def manhattan_distance(a, b=None):
-    b = Vector(0, 0)
-    return abs(a.x - b.x) + abs(a.y - b.y)
-
-
 def _part_1():
     s = Ship()
     for inst in f().split():
@@ -96,7 +91,7 @@ def _part_1():
         elif a == "R":
             s.velocity = round(s.velocity.rotate(-amt))
 
-    return manhattan_distance(s.position)
+    return s.position.manhattan_distance()
 
 
 def _part_2():
@@ -111,7 +106,7 @@ def _part_2():
             s.velocity = round(s.velocity.rotate(amt))
         elif a == "R":
             s.velocity = round(s.velocity.rotate(-amt))
-    return manhattan_distance(s.position)
+    return s.position.manhattan_distance()
 
 
 def f():
