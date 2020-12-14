@@ -55,7 +55,7 @@ def _bags():
 
 
 def _input():
-    with open(os.path.join(os.path.dirname(__main__.__file__), "input")) as f:
+    with open(os.path.join(os.path.dirname(__file__), "input")) as f:
         return f.read().strip()
 
 
