@@ -30,19 +30,16 @@ class Vector:
     def __iter__(self):
         return iter((self.x, self.y))
 
-    def rotate(self, degrees, about=None):
-        about = about or Vector(0, 0)
+    def manhattan_distance(self, other=None):
+        other = other or Vector(0, 0)
+        return abs(self.x - other.x) + abs(self.y - other.y)
+
+    def rotate(self, degrees):
         radians = math.pi / 180 * degrees
 
-        px, py = self.x, self.y
-        ax, ay = about.x, about.y
-        dx, dy = px - ax, py - ay
-
         # There is a less mathy solution, but I don't care
-        c = complex(dx, dy) * complex(math.cos(radians), math.sin(radians))
-        new_dx, new_dy = c.real, c.imag
-
-        return about + Vector(new_dx, new_dy)
+        c = complex(self.x, self.y) * complex(math.cos(radians), math.sin(radians))
+        return Vector(c.real, c.imag)
 
 
 NORTH = Vector(0, 1)
