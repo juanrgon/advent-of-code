@@ -1,5 +1,4 @@
 import os.path
-import re
 import math
 
 
@@ -8,120 +7,113 @@ def main():
     print("Solution to Part 2: " + str(_part_2()))
 
 
-class Ship:
-    def __init__(self, position):
-        self.position = position
-        self.facing = "E"
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
-    def move(self, direction, amt):
-        self.facing, previous_direction = direction, self.facing
-        self.advance(amt)
-        self.facing = previous_direction
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __mul__(self, amount):
+        return Vector(amount * self.x, amount * self.y)
+
+    def __rmul__(self, amount):
+        return Vector(amount * self.x, amount * self.y)
+
+    def __repr__(self):
+        return f"({self.x}, {self.y})"
+
+    def __round__(self, ndigits=None):
+        return Vector(round(self.x, ndigits), round(self.y, ndigits))
+
+    def __iter__(self):
+        return iter((self.x, self.y))
+
+    def rotate(self, degrees, about=None):
+        about = about or Vector(0, 0)
+        radians = math.pi / 180 * degrees
+
+        px, py = self.x, self.y
+        ax, ay = about.x, about.y
+        dx, dy = px - ax, py - ay
+
+        # There is a less mathy solution, but I don't care
+        c = complex(dx, dy) * complex(math.cos(radians), math.sin(radians))
+        new_dx, new_dy = c.real, c.imag
+
+        return about + Vector(new_dx, new_dy)
+
+
+NORTH = Vector(0, 1)
+SOUTH = Vector(0, -1)
+EAST = Vector(1, 0)
+WEST = Vector(-1, 0)
+
+
+class Ship:
+    def __init__(self, position=None, velocity=None):
+        self.position = position or Vector(0, 0)
+        self.velocity = velocity or Vector(1, 0)
+
+    def translate(self, direction, amt):
+        if direction == "N":
+            translation = NORTH
+        elif direction == "S":
+            translation = SOUTH
+        elif direction == "E":
+            translation = EAST
+        elif direction == "W":
+            translation = WEST
+        self.position = self.position + amt * translation
 
     def advance(self, amt):
-        if self.facing == "E":
-            self.position = (self.position[0] + amt, self.position[1])
-        elif self.facing == "N":
-            self.position = (self.position[0], self.position[1] + amt)
-        elif self.facing == "S":
-            self.position = (self.position[0], self.position[1] - amt)
-        elif self.facing == "W":
-            self.position = (self.position[0] - amt, self.position[1])
+        self.position = self.position + amt * self.velocity
 
-    def left(self, deg):
-        turns = int(deg / 90)
-
-        for turn in range(turns):
-            if self.facing == "E":
-                self.facing = "N"
-            elif self.facing == "N":
-                self.facing = "W"
-            elif self.facing == "W":
-                self.facing = "S"
-            elif self.facing == "S":
-                self.facing = "E"
-
-    def right(self, deg):
-        turns = int(deg / 90)
-
-        for turn in range(turns):
-            if self.facing == "E":
-                self.facing = "S"
-            elif self.facing == "S":
-                self.facing = "W"
-            elif self.facing == "W":
-                self.facing = "N"
-            elif self.facing == "N":
-                self.facing = "E"
+    def change_course(self, direction, amt):
+        if direction == "N":
+            self.velocity += amt * NORTH
+        elif direction == "S":
+            self.velocity += amt * SOUTH
+        elif direction == "E":
+            self.velocity += amt * EAST
+        elif direction == "W":
+            self.velocity += amt * WEST
 
 
-def manhattan_distance(a, b=(0, 0)):
-    return abs(a[0] - b[0]) + abs(a[1] - b[0])
-
-
-class Follower:
-    def __init__(self, waypoint):
-        self.position = (0, 0)
-        self.waypoint = waypoint
-
-    def advance(self, times=1):
-        for i in range(times):
-            x, y = self.position
-            wx, wy = self.waypoint.position
-            dx, dy = wx - x, wy - y
-
-            self.position = wx, wy
-            self.waypoint.position = wx + dx, wy + dy
-
-    def rotate_waypoint(self, degrees):
-        x, y = rotate_point(
-            point=self.waypoint.position, degrees=degrees, center=self.position
-        )
-        self.waypoint.position = round(x), round(y)
-
-
-def rotate_point(point, degrees, center=(0, 0)):
-    radians = math.pi / 180 * degrees
-
-    px, py = point
-    cx, cy = center
-    dx, dy = px - cx, py - cy
-
-    # There is a less mathy solution, but I don't care
-    c = complex(dx, dy) * complex(math.cos(radians), math.sin(radians))
-    new_dx, new_dy = c.real, c.imag
-
-    return cx + new_dx, cy + new_dy
+def manhattan_distance(a, b=None):
+    b = Vector(0, 0)
+    return abs(a.x - b.x) + abs(a.y - b.y)
 
 
 def _part_1():
-    s = Ship((0, 0))
+    s = Ship()
     for inst in f().split():
         a, amt = inst[0], int(inst[1:])
         if a in ("E", "N", "S", "W"):
-            s.move(a, amt)
+            s.translate(a, amt)
         elif a == "F":
             s.advance(amt)
         elif a == "L":
-            s.left(amt)
+            s.velocity = round(s.velocity.rotate(amt))
         elif a == "R":
-            s.right(amt)
+            s.velocity = round(s.velocity.rotate(-amt))
 
     return manhattan_distance(s.position)
 
 
 def _part_2():
-    s = Follower(waypoint=Ship((10, 1)))
+    s = Ship(velocity=Vector(10, 1))
     for inst in f().split():
         a, amt = inst[0], int(inst[1:])
         if a in ("E", "N", "S", "W"):
-            s.waypoint.move(a, amt)
-        elif a == "L":
-            s.rotate_waypoint(amt)
-        elif a == "R":
-            s.rotate_waypoint(-amt)
+            s.change_course(a, amt)
         elif a == "F":
             s.advance(amt)
+        elif a == "L":
+            s.velocity = round(s.velocity.rotate(amt))
+        elif a == "R":
+            s.velocity = round(s.velocity.rotate(-amt))
     return manhattan_distance(s.position)
 
 
