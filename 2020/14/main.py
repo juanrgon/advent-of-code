@@ -1,47 +1,13 @@
 import os.path
 from collections import defaultdict
 import re
-from itertools import *
-from collections import *
-from more_itertools import *
-from sortedcontainers import *
 import sys
-
-
-def fst(x):
-    return x[0]
-
-
-def snd(x):
-    return x[1]
 
 
 def ints(text):
     if callable(text):
         text = text()
     return [int(i) for i in re.findall(r"\d+", text)]
-
-
-def min_max(l):
-    return min(l), max(l)
-
-
-def words(s: str):
-    return re.findall(r"[a-zA-Z]+", s)
-
-
-def every_n(l, n):
-    return list(zip(*[iter(l)] * n))
-
-
-def make_hashable(l):
-    if isinstance(l, list):
-        return tuple(map(make_hashable, l))
-    if isinstance(l, dict):
-        l = set(l.items())
-    if isinstance(l, set):
-        return frozenset(map(make_hashable, l))
-    return l
 
 
 def main():
