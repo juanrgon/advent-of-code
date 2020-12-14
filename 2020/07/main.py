@@ -1,6 +1,5 @@
 import os.path
 from collections import defaultdict
-import __main__
 import re
 
 
