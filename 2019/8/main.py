@@ -28,8 +28,8 @@ def _part_2():
 
 
 def _image_decoded(image):
-    white_pixel = "\x1b[47m \x1b[0m"
-    black_pixel = "\x1b[40m \x1b[0m"
+    white_pixel = " "
+    black_pixel = "*"
 
     final_layer = ["2"] * IMAGE_WIDTH * IMAGE_HEIGHT
     for layer in _chunked(image, IMAGE_HEIGHT * IMAGE_WIDTH):
