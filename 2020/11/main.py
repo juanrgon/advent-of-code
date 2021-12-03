@@ -1,9 +1,21 @@
 import os.path
-from collections import defaultdict
 import re
 from itertools import (
     product,
 )
+
+
+def main():
+    print("Solution to Part 1: " + str(_part_1()))
+    print("Solution to Part 2: " + str(_part_2()))
+
+
+def _part_1():
+    return 0
+
+
+def _part_2():
+    return 0
 
 
 def f():
@@ -13,9 +25,45 @@ def f():
         return f.read().strip()
 
 
-class S:
+class Grid(dict):
+
+    def display(self):
+        height = max(self.keys(), key=lambda rc: rc[0], default=[-1, -1])[0] + 1
+        width = max(self.keys(), key=lambda rc: rc[1], default=[-1, -1])[1] + 1
+
+        for row in range(height):
+            for col in range(width):
+                s = self.get((row, col), Floor())
+                print(s.symbol(), end="")
+            print()
+
+    def _connect(self):
+        self.
+
+
+def _connect():
+    pass
+
+class Space:
     def __init__(self):
         self.siblings = {}
+
+    def __repr__(self):
+        return self.symbol()
+
+
+class Floor(Space):
+    def symbol(self):
+        return "."
+
+
+class Seat(Space):
+    def __init__(self, occupied):
+        self.siblings = {}
+        self.occupied = occupied
+
+    def symbol(self):
+        return "#" if self.occupied else "L"
 
     def next(self):
         if len([s for s in self.sibling_seats() if s.occupied]) >= 4:
@@ -54,59 +102,56 @@ class S:
             return sib.neighbor(direction)
 
 
-seats = defaultdict(S)
+grid = Grid()
+
 rows = f().split("\n")
 for r, row in enumerate(rows):
     for c, char in enumerate(row):
-        s = seats[(r, c)]
-        if char != ".":
-            s.occupied = char == "#"
-            s.is_dot = False
-            s.row = r
-            s.col = c
+        if char == ".":
+            grid[r, c] = Floor()
         else:
-            s.is_dot = True
-            s.occupied = False
-            s.row = r
-            s.col = c
+            grid[r, c] = Seat(occupied=(char == "#"))
+
+grid.display()
 
 
-seats = dict(seats)
+# for (row, col), s in seats.items():
+#     for a, b in product(range(-1, 2), repeat=2):
+#         if (a, b) == (0, 0):
+#             continue
 
-for (row, col), s in seats.items():
-    for a, b in product(range(-1, 2), repeat=2):
-        if (a, b) == (0, 0):
-            continue
-
-        t = seats.get((row + a, col + b))
-        if t:
-            s.siblings[(a, b)] = t
+#         t = seats.get((row + a, col + b))
+#         if t:
+#             s.siblings[(a, b)] = t
 
 
+# while True:
+#     n = dict()
+#     for seat in seats.values():
+#         if seat.is_dot:
+#             continue
+#         n[(seat.row, seat.col)] = seat.next_2()
 
-while True:
-    n = dict()
-    for seat in seats.values():
-        if seat.is_dot:
-            continue
-        n[(seat.row, seat.col)] = seat.next_2()
+#     prev = len([s for s in seats.values() if not s.is_dot and s.occupied])
 
-    prev = len([s for s in seats.values() if not s.is_dot and s.occupied])
+#     for (a, b), state in n.items():
+#         seats[(a, b)].occupied = state
 
-    for (a, b), state in n.items():
-        seats[(a, b)].occupied = state
+#     if prev == len([s for s in seats.values() if not s.is_dot and s.occupied]):
+#         break
 
-    if prev == len([s for s in seats.values() if not s.is_dot and s.occupied]):
-        break
+#     # for r in range(10):
+#     #     for c in range(10):
+#     #         s = seats.get((r, c))
+#     #         if not s.is_dot:
+#     #             print('#' if s.occupied else 'L', end ='')
+#     #         else:
+#     #             print('.', end='')
+#     #     print()
+#     # print("--------------------")
 
-    # for r in range(10):
-    #     for c in range(10):
-    #         s = seats.get((r, c))
-    #         if not s.is_dot:
-    #             print('#' if s.occupied else 'L', end ='')
-    #         else:
-    #             print('.', end='')
-    #     print()
-    # print("--------------------")
+# print(prev)
 
-print(prev)
+
+if __name__ == "__main__":
+    main()
