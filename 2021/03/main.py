@@ -91,7 +91,7 @@ def part_2(raw: str, ints: List[int], strs: List[str]):
 
 
 if __name__ == "__main__":
-    puzzle = (Path(__file__).parent / "input").read_text().strip()
+    puzzle = aoc.get_puzzle(__file__)
 
     part_1.test()
     print("Part 1:", part_1(puzzle))
