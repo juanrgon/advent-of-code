@@ -1,6 +1,8 @@
 import requests
 from .aoc_token import aoc_token
 from .script import Script
+from datetime import datetime
+import pendulum
 
 
 def get_puzzle(script_filename: str) -> str:
@@ -39,6 +41,13 @@ def get_puzzle(script_filename: str) -> str:
 
     # If puzzle input file is empty...
     if not script.puzzle_file.read_text():
+        puzzle_start = pendulum.datetime(
+            int(script.year), 12, int(script.day), 0, 0, 0, tz="US/Eastern"
+        )
+
+        if pendulum.now() < puzzle_start:
+            raise RuntimeError(f"Too early for {script.year} Day {script.day}")
+
         # ...download the puzzle if the AOC session token is set in env vars
         if aoc_token():
             response = requests.get(
