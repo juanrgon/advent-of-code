@@ -6,17 +6,17 @@ from dotenv import load_dotenv
 # Load env vars from local .env file if it exists
 load_dotenv()
 
-AOC_TOKEN_ENV_VAR_NAME = "ADVENT_OF_CODE_COOKIE"
-AOC_TOKEN = os.environ.get(AOC_TOKEN_ENV_VAR_NAME, "")
 
 @lru_cache
 def aoc_token() -> str:
-    if not AOC_TOKEN:
-        import ipdb; ipdb.set_trace()
+    aoc_token_env_var = "ADVENT_OF_CODE_COOKIE"
+    aoc_token_value = os.environ.get(aoc_token_env_var, "")
+
+    if not aoc_token_value:
         print(
             textwrap.dedent(
             f"""
-            {AOC_TOKEN_ENV_VAR_NAME} isn't set, so the puzzle input can't be automatically
+            {aoc_token_env_var} isn't set, so the puzzle input can't be automatically
             downloaded, and puzzle solutions can't be automatically submitted.
 
             You can get the cookie value by
@@ -40,4 +40,4 @@ def aoc_token() -> str:
             )
         )
 
-    return AOC_TOKEN
+    return aoc_token_value
