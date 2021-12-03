@@ -1,11 +1,9 @@
-import os
 import requests
-from requests_html import HTML
-from pathlib import Path
 from .aoc_token import aoc_token
+from .script import Script
 
 
-def get_puzzle(script_path: str) -> str:
+def get_puzzle(script_filename: str) -> str:
     """
     Return the puzzle input for the given aoc solution script filepath.
 
@@ -34,36 +32,28 @@ def get_puzzle(script_path: str) -> str:
     """
 
     # Use the folder that the script is in to to determine
-    script = Path(script_path)
-
-    year = script.parent.parent.name
-    day = script.parent.name.lstrip("0")
-
-    puzzle_file = script.parent / "input"
+    script = Script.from_filename(script_filename)
 
     # create the puzzle file if it doesn't already exist
-    puzzle_file.touch(exist_ok=True)
-
-
+    script.puzzle_file.touch(exist_ok=True)
 
     # If puzzle input file is empty...
-    if not puzzle_file.read_text():
+    if not script.puzzle_file.read_text():
         # ...download the puzzle if the AOC session token is set in env vars
         if aoc_token():
-            puzzle_url = f"https://adventofcode.com/{year}/day/{day}/input"
             response = requests.get(
-                puzzle_url,
+                script.puzzle_url,
                 cookies={"session": aoc_token()},
             )
 
             try:
                 response.raise_for_status()
             except Exception as e:
-                raise RuntimeError(f"Failed to download {puzzle_url}") from e
+                raise RuntimeError(f"Failed to download {script.puzzle_url}") from e
 
-            puzzle_file.write_text(response.text)
+            script.puzzle_file.write_text(response.text)
         # ...else abort
         else:
-            raise RuntimeError(f"{puzzle_file} is empty!")
+            raise RuntimeError(f"{script.puzzle_file} is empty!")
 
-    return puzzle_file.read_text().strip()
+    return script.puzzle_file.read_text().strip()

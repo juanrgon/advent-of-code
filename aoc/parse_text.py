@@ -1,7 +1,6 @@
 import functools
-from pathlib import Path
 from textwrap import dedent
-from typing import Any, Dict, List, Literal, Optional, Union, Callable
+from typing import Union, Callable
 
 
 def parse_text(fn: Callable):
