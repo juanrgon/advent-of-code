@@ -1,8 +1,8 @@
 import click
 import pendulum
-from pathlib import Path
 import subprocess
 import aoc.new_script
+import os
 
 
 @click.command()
@@ -25,7 +25,8 @@ def new(year: str, day: str):
 
     print(f"Created script {script_file}!")
 
-    subprocess.Popen(
-        f"$EDITOR {script_file}",
-        shell=True,
-    )
+    if "EDITOR" in os.environ.get():
+        subprocess.Popen(
+            f"$EDITOR {script_file}",
+            shell=True,
+        )
