@@ -29,6 +29,9 @@ def submit(local_scriptpath: str, parts: List[int]):
         part = getattr(module, f'part_{i}')
 
         puzzle = aoc.get_puzzle(script)
+
+        part.test()
         solution = part(puzzle)
 
         aoc.submit_puzzle(script_filename=script, part=i, solution=solution)
+        print("Submitted Part {i}!")
