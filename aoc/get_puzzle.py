@@ -33,7 +33,8 @@ def get_puzzle(script_filename: str) -> str:
     ADVENT_OF_CODE_COOKIE environment variable is set.
     """
 
-    # Use the folder that the script is in to to determine
+    # Use the folder that the script is in to to determine which AOC puzzle we're
+    # working on
     script = Script.from_filename(script_filename)
 
     # create the puzzle file if it doesn't already exist
