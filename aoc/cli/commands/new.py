@@ -62,6 +62,7 @@ def _default_date() -> pendulum.DateTime:
     default=lambda: str(_default_date().day),
 )
 def new(year: str, day: str):
+    """Create new script for AOC"""
     script_file = aoc.new_script(year=year, day=day)
 
     print(f"Created script {script_file}!")
