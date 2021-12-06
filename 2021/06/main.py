@@ -9,7 +9,7 @@ TEST2 = (
 import sys
 from pathlib import Path
 from typing import List
-from functools import lru_cache
+from functools import cache
 
 # import local AOC lib
 sys.path.append(str(Path(__file__).parent.parent.parent))
@@ -32,7 +32,7 @@ def part_2(raw: str, ints: List[int], strs: List[str]):
     return sum(total_fish(fish, days=256) for fish in fishes)
 
 
-@lru_cache(maxsize=None)
+@cache
 def total_fish(timer, days):
     if days == 0:
         return 1
