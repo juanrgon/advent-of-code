@@ -63,6 +63,6 @@ def status(refresh_from_site: bool):
 
 
         for day, parts in years[year].items():
-            print(f'Day {day}', terminology.in_yellow('*' * parts))
+            print(f'Day {str(day).rjust(2)}', terminology.in_yellow('*' * parts))
 
         print()
