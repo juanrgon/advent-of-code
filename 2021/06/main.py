@@ -21,16 +21,7 @@ import aoc
 def part_1(raw: str, ints: List[int], strs: List[str]):
     fishes = aoc.ints(raw)
 
-    for i in range(80):
-        created = []
-        for f in range(len(fishes)):
-            fishes[f] = fishes[f] - 1
-            if fishes[f] == -1:
-                created.append(8)
-                fishes[f] = 6
-        fishes = fishes + created
-
-    return len(fishes)
+    return sum(total_fish(fish, days=80) for fish in fishes)
 
 
 @aoc.tests(TEST2)
@@ -41,7 +32,7 @@ def part_2(raw: str, ints: List[int], strs: List[str]):
     return sum(total_fish(fish, days=256) for fish in fishes)
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def total_fish(timer, days):
     if days == 0:
         return 1
