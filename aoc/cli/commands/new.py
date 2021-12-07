@@ -31,7 +31,7 @@ def _default_date() -> pendulum.DateTime:
         elif now.hour == 0:
             # if it's after 12AM in December, use yestrday as the default date because
             # you probably want to do yesteray's date
-            return pendulum.yesterday(east)
+            return pendulum.today(east)
 
     year = int(os.environ["AOC_YEAR"]) or now.year
 
