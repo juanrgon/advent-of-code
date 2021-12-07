@@ -14,6 +14,7 @@ TEST = """
 import sys
 from pathlib import Path
 from typing import List
+from more_itertools import windowed
 
 # import local AOC lib
 sys.path.append(str(Path(__file__).parent.parent.parent))
@@ -23,7 +24,7 @@ import aoc
 @aoc.tests([(TEST, 7)])
 @aoc.parse_text
 def part_1(raw: str, ints: List[int], strs: List[str]):
-    return sum([int(b > a) for a, b in aoc.mi.windowed(ints, 2, fillvalue=0)])
+    return sum([int(b > a) for a, b in windowed(ints, 2, fillvalue=0)])
 
 
 @aoc.tests([(TEST, 5)])
@@ -32,8 +33,8 @@ def part_2(raw: str, ints: List[int], strs: List[str]):
     return sum(
         [
             int(b > a)
-            for a, b in aoc.mi.windowed(
-                [sum(triple) for triple in aoc.mi.windowed(ints, 3, fillvalue=0)],
+            for a, b in windowed(
+                [sum(triple) for triple in windowed(ints, 3, fillvalue=0)],
                 2,
                 fillvalue=0,
             )
