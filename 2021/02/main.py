@@ -19,7 +19,6 @@ forward 2
 
 import sys
 from pathlib import Path
-from typing import List
 
 # import local AOC lib
 sys.path.append(str(Path(__file__).parent.parent.parent))
@@ -28,7 +27,7 @@ import aoc
 
 @aoc.tests([TEST])
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: list[int], strs: list[str]):
     x, y = 0, 0
 
     for line in strs:
@@ -47,7 +46,7 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
 
 @aoc.tests([TEST2])
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: list[int], strs: list[str]):
     x, y, aim = 0, 0, 0
 
     for line in strs:

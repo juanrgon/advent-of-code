@@ -37,7 +37,6 @@ TEST2 = (
 
 import sys
 from pathlib import Path
-from typing import List, Match
 from collections import defaultdict, Counter
 import math
 
@@ -48,7 +47,7 @@ import aoc
 
 @aoc.tests([TEST])
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: list[int], strs: list[str]):
 
     bit_counts = defaultdict(lambda: {"0": 0, "1": 1})
 
@@ -67,7 +66,7 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
 
 @aoc.tests([TEST2])
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: list[int], strs: list[str]):
     oxy = strs
     co2 = strs
 

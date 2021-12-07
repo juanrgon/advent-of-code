@@ -1,5 +1,5 @@
 TEST = (
-"""
+    """
 7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
 
 22 13 17 11  0
@@ -24,7 +24,7 @@ TEST = (
 )
 
 TEST2 = (
-"""
+    """
 7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
 
 22 13 17 11  0
@@ -48,11 +48,8 @@ TEST2 = (
     1924,
 )
 
-from typing import List
-
 import sys
 from pathlib import Path
-from typing import List
 import attr
 import terminology
 
@@ -71,7 +68,7 @@ class BingoCell:
 class BingoBoard:
     """Bingo Board is a winner if all in a row, or all in a column"""
 
-    rows: List[List[BingoCell]]
+    rows: list[list[BingoCell]]
 
     @classmethod
     def populate(cls, s: str):
@@ -84,11 +81,10 @@ class BingoBoard:
 
     def winner(self) -> bool:
         return any(
-            all(c.binged for c in cells)
-            for cells in (self.rows + list(self.columns()))
+            all(c.binged for c in cells) for cells in (self.rows + list(self.columns()))
         )
 
-    def columns(self) -> List[List[BingoCell]]:
+    def columns(self) -> list[list[BingoCell]]:
         cols = []
         for col in range(len(self.rows)):
             cols.append([row[col] for row in self.rows])
@@ -131,7 +127,7 @@ class BingoBoard:
 
 @aoc.tests([TEST])
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: list[int], strs: list[str]):
     bings = aoc.ints(strs[0])
 
     boards = [BingoBoard.populate(s) for s in raw.split("\n\n")[1:]]
@@ -147,14 +143,15 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
         #         board.display()
         #     pass
 
+
 @aoc.tests([TEST2])
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: list[int], strs: list[str]):
     bings = aoc.ints(strs[0])
 
     boards = [BingoBoard.populate(s) for s in raw.split("\n\n")[1:]]
 
-    winners: List[int] = []
+    winners: list[int] = []
 
     for bing in bings:
 
@@ -168,8 +165,8 @@ def part_2(raw: str, ints: List[int], strs: List[str]):
             if i not in winners and board.winner():
                 score = sum(b.value for b in board.unbinged()) * bing
                 winners.append(i)
-                print(f'Board {i} score: {score}')
-                print('--------------------')
+                print(f"Board {i} score: {score}")
+                print("--------------------")
                 board.display()
 
     return score

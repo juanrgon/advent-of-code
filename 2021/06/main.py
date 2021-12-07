@@ -8,7 +8,6 @@ TEST2 = (
 
 import sys
 from pathlib import Path
-from typing import List
 from functools import cache
 
 # import local AOC lib
@@ -18,13 +17,13 @@ import aoc
 
 @aoc.tests(TEST)
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: list[int], strs: list[str]):
     return sum(total_fish(fish, days=80) for fish in ints)
 
 
 @aoc.tests(TEST2)
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: list[int], strs: list[str]):
     return sum(total_fish(fish, days=256) for fish in ints)
 
 

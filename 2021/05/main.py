@@ -30,7 +30,6 @@ TEST2 = (
     12,
 )
 
-from typing import List, Dict, DefaultDict
 import attr
 from collections import defaultdict
 
@@ -46,7 +45,7 @@ class Point:
 
 @attr.define
 class Vent:
-    points: List[Point]
+    points: list[Point]
 
     @classmethod
     def from_string(cls, s: str, with_diagonals=False) -> "Vent":
@@ -75,13 +74,13 @@ class Vent:
 
 @attr.define
 class Grid:
-    hits: Dict[Point, int]
+    hits: dict[Point, int]
     width: int
     height: int
 
     @classmethod
-    def from_vents(cls, vents: List[Vent]) -> "Grid":
-        hits: DefaultDict[Point, int] = defaultdict(int)
+    def from_vents(cls, vents: list[Vent]) -> "Grid":
+        hits: defaultdict[Point, int] = defaultdict(int)
         max_x = 0
         max_y = 0
 
@@ -103,7 +102,7 @@ class Grid:
 
 @aoc.tests([TEST])
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: list[int], strs: list[str]):
     vents = []
     for line in strs:
         vents.append(Vent.from_string(line))
@@ -113,7 +112,7 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
 
 @aoc.tests([TEST2])
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: list[int], strs: list[str]):
     vents = []
     for line in strs:
         vents.append(Vent.from_string(line, with_diagonals=True))
