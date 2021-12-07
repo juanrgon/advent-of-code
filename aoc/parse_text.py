@@ -5,12 +5,10 @@ from .ints import ints
 
 
 def parse_text(fn: Callable):
+
     @functools.wraps(fn)
     def fn_override(raw: str) -> int | str:
         text = dedent(raw).strip()
-
-        strs = text.splitlines()
-
-        return fn(raw=raw, ints=ints(text), strs=strs)
+        return fn(raw=text, ints=ints(text), strs=text.splitlines())
 
     return fn_override
