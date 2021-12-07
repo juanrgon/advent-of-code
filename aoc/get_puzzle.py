@@ -82,7 +82,7 @@ def get_puzzle(script_filename: str) -> str:
             cookies={"session": aoc_token()},
         )
 
-        html = '\n\n'.join([a.html for a in response.html.find("article")])
+        html = "\n\n".join([a.html for a in response.html.find("article")])
 
         if not html:
             print("Failed to download prompt!")
@@ -105,6 +105,13 @@ def _html_to_markdown(_html):
 
     _html = re.sub("<h2.*?>(?P<text>.*?)</h2>", "## \g<text>\n\n", _html)
     _html = re.sub("<span .*?>(?P<text>.*?)</span>", "\g<text>", _html)
+
+    _html = re.sub(
+        "<pre><code>(?P<code>.*?)</code></pre>",
+        "\n```\n\g<code>```\n",
+        _html,
+        flags=re.DOTALL,
+    )
 
     _html = html.unescape(_html)
 
