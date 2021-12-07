@@ -2,10 +2,8 @@ from typing import Any, Dict, List, Optional, Union, Iterable
 import attr
 
 
-def tests(cases: Iterable[Union[str, Any]]):
-
+def tests(cases: Iterable[str | Any]):
     def decorator(fn):
-
         def test():
             _test_function(fn, fn.test_cases)
 
@@ -16,11 +14,13 @@ def tests(cases: Iterable[Union[str, Any]]):
 
     return decorator
 
+
 @attr.define
 class TestCase:
-    args: Optional[List[Any]] = None
-    kwargs: Optional[Dict[str, Any]] = None
-    expected: Optional[Union[str, int]] = None
+    args: list[Any] | None = None
+    kwargs: dict[str, Any] | None = None
+    expected: str | int | None = None
+
 
 def _test_function(fn, test_cases: List[TestCase]):
     for i, test_case in enumerate(test_cases):
@@ -32,4 +32,3 @@ def _test_function(fn, test_cases: List[TestCase]):
             raise ValueError(
                 f"Test Case {i} Failed: Expected '{expected}'. Got {solution}"
             )
-

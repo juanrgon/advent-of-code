@@ -1,6 +1,5 @@
 import click
 import importlib.util
-from typing import List
 from pathlib import Path
 import aoc
 
@@ -15,7 +14,7 @@ import aoc
     multiple=True,
     help="A specific part of the puzzle to submit, either 1 or 2. Defaults to submitting both if omitted.",
 )
-def submit(local_scriptpath: str, parts: List[int]):
+def submit(local_scriptpath: str, parts: list[int]):
     """Submit solution(s) from script to AOC."""
 
     script = Path(local_scriptpath).absolute()

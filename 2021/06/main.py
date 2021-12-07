@@ -1,17 +1,11 @@
-TEST = (
-    ("3,4,3,1,2", 5934),
-)
+TEST = (("3,4,3,1,2", 5934),)
 
-TEST2 = (
-    ("3,4,3,1,2", 26984457539),
-)
+TEST2 = (("3,4,3,1,2", 26984457539),)
 
 import sys
 from pathlib import Path
 from functools import cache
 
-# import local AOC lib
-sys.path.append(str(Path(__file__).parent.parent.parent))
 import aoc
 
 
@@ -28,7 +22,7 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
 
 
 @cache
-def total_fish(timer, days):
+def total_fish(timer: int, days: int) -> int:
     if days == 0:
         return 1
 
