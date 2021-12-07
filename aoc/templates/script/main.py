@@ -28,5 +28,5 @@ if __name__ == "__main__":
     part_1.test()
     print("Part 1:", part_1(puzzle))
 
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    # part_2.test()
+    # print("Part 2:", part_2(puzzle))
