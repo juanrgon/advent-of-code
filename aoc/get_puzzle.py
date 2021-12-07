@@ -1,8 +1,10 @@
-import requests
 from .aoc_token import aoc_token
 from .script import Script
 from datetime import datetime
+import requests_html
 import pendulum
+import re
+import html
 
 
 def get_puzzle(script_filename: str) -> str:
@@ -40,8 +42,10 @@ def get_puzzle(script_filename: str) -> str:
     # create the puzzle file if it doesn't already exist
     script.puzzle_file.touch(exist_ok=True)
 
+    session = requests_html.HTMLSession()
+
     # If puzzle input file is empty...
-    if not script.puzzle_file.read_text():
+    if not script.puzzle_file.read_text().strip():
         puzzle_start = pendulum.datetime(
             int(script.year), 12, int(script.day), 0, 0, 0, tz="US/Eastern"
         )
@@ -51,7 +55,7 @@ def get_puzzle(script_filename: str) -> str:
 
         # ...download the puzzle if the AOC session token is set in env vars
         if aoc_token():
-            response = requests.get(
+            response = session.get(
                 script.puzzle_url,
                 cookies={"session": aoc_token()},
             )
@@ -62,8 +66,51 @@ def get_puzzle(script_filename: str) -> str:
                 raise RuntimeError(f"Failed to download {script.puzzle_url}") from e
 
             script.puzzle_file.write_text(response.text)
+
         # ...else abort
         else:
             raise RuntimeError(f"{script.puzzle_file} is empty!")
 
+    # Create prompt file if it doesn't already exist
+    script.prompt_file.touch(exist_ok=True)
+
+    prompt_file = script.prompt_file.read_text().strip()
+
+    if "Part Two" not in prompt_file:
+        response = session.get(
+            script.prompt_url,
+            cookies={"session": aoc_token()},
+        )
+
+        html = '\n\n'.join([a.html for a in response.html.find("article")])
+
+        if not html:
+            print("Failed to download prompt!")
+
+        script.prompt_file.write_text(_html_to_markdown(html))
+
     return script.puzzle_file.read_text().strip()
+
+
+def _html_to_markdown(_html):
+    _html = re.sub("<p>(?P<text>.*?)</p>", "\n\g<text>\n", _html)
+
+    _html = re.sub("<em>(?P<text>.*?)</em>", "**\g<text>**", _html)
+
+    _html = _html.replace("<ul>", "")
+    _html = _html.replace("</ul>", "")
+    _html = re.sub("<li>(?P<text>.*?)</li>", "- \g<text>", _html)
+
+    _html = re.sub("<code>(?P<text>.*?)</code>", "`\g<text>`", _html)
+
+    _html = re.sub("<h2.*?>(?P<text>.*?)</h2>", "## \g<text>\n\n", _html)
+    _html = re.sub("<span .*?>(?P<text>.*?)</span>", "\g<text>", _html)
+
+    _html = html.unescape(_html)
+
+    _html = re.sub("<article .*?>", "", _html)
+    _html = re.sub("</article>", "", _html)
+
+    _html = _html.replace("\n\n", "\n").strip()
+
+    return _html

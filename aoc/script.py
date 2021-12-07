@@ -10,9 +10,11 @@ class Script:
     year: str
 
     path: Path
+    prompt_file: Path
     puzzle_file: Path
-    submit_url: str
+    prompt_url: str
     puzzle_url: str
+    submit_url: str
     part_2_url: str
 
     @classmethod
@@ -28,7 +30,9 @@ class Script:
             day=day,
             year=year,
             path=path,
+            prompt_file=path.parent / "puzzle.md",
             puzzle_file=path.parent / "input",
+            prompt_url=f"{url}",
             puzzle_url=f"{url}/input",
             submit_url=f"{url}/answer",
             part_2_url=f"{url}#part2",
