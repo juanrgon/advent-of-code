@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 TEST = (
     ("1", 0),
     ("12", 3),
@@ -14,19 +17,19 @@ TEST2 = (
     ("800", 806),
 )
 
-import sys
-from pathlib import Path
-from typing import List
-import math
 
-# import local AOC lib
-sys.path.append(str(Path(__file__).parent.parent.parent))
+import itertools
+from collections import defaultdict
+import math
+import attr
+from itertools import count
+
 import aoc
 
 
 @aoc.tests(TEST)
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: list[int], strs: list[str]):
     """
     Visual representation of this solution:
 
@@ -75,23 +78,75 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
     #      goes, 4 3 2 3 4 3 2 3 4, etc. repeating every 5th term.
 
     m = int((x - 1) % s)
-    return abs(m -int(s/2)) + int(s / 2)
+    return abs(m - int(s / 2)) + int(s / 2)
 
 
 @aoc.tests(TEST2)
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: list[int], strs: list[str]):
     target = int(raw)
 
-    # construct grid of numbers
-    # logically grid has to be less than sqrt()
+    sums = defaultdict(int)
+    sums[Vector.origin()] = 1
+
+    for v in Vector(x=1, y=0).spiral():
+        sums[v] += sum([sums[w] for w in v.neighbors()])
+        if sums[v] > target:
+            return sums[v]
+
+
+@attr.define(frozen=True)
+class Vector:
+    x: int
+    y: int
+
+    @classmethod
+    def origin(cls) -> Vector:
+        return Vector(0, 0)
+
+    def neighbors(self):
+        n = []
+
+        for x, y in itertools.product([0, 1, -1], repeat=2):
+            direction = Vector(x, y)
+
+            if direction == Vector.origin():
+                continue
+
+            n.append(self + Vector(x, y))
+
+        return n
+
+    def spiral(self):
+        v = self
+
+        directions = itertools.cycle(
+            [Vector(x=0, y=1), Vector(x=-1, y=0), Vector(x=0, y=-1), Vector(x=1, y=0)]
+        )
+
+        direction = next(directions)
+
+        for _ in count():
+            yield v
+
+            if abs(v.x) == abs(v.y):
+                direction = next(directions)
+
+            if v.x > 0 and -v.x == v.y:
+                v += Vector(1, -1)
+
+            v += direction
+
+    def __add__(self, other: Vector):
+        return Vector(self.x + other.x, self.y + other.y)
 
 
 if __name__ == "__main__":
-    puzzle = (Path(__file__).parent / "input").read_text().strip()
+
+    puzzle = aoc.get_puzzle(__file__)
 
     part_1.test()
     print("Part 1:", part_1(puzzle))
 
-    # part_2.test()
-    # print("Part 2:", part_2(puzzle))
+    part_2.test()
+    print("Part 2:", part_2(puzzle))
