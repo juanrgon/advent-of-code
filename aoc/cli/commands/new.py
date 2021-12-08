@@ -45,7 +45,6 @@ def _default_date() -> pendulum.DateTime:
     return pendulum.datetime(int(year), 12, day, 0, 0, 0)
 
 
-
 @click.command()
 @click.option(
     "-y",

@@ -21,8 +21,8 @@ class Script:
     def from_filename(cls, script_filename: str) -> "Script":
         path = Path(script_filename)
 
-        day=path.parent.name.lstrip("0")
-        year=path.parent.parent.name
+        day = path.parent.name.lstrip("0")
+        year = path.parent.parent.name
 
         url = f"https://adventofcode.com/{year}/day/{day}"
 

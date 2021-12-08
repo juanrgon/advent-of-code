@@ -1,8 +1,5 @@
 from .aoc_token import aoc_token
 from .script import Script
-from datetime import datetime
-import requests_html
-import pendulum
 import re
 import html
 
@@ -42,10 +39,13 @@ def get_puzzle(script_filename: str) -> str:
     # create the puzzle file if it doesn't already exist
     script.puzzle_file.touch(exist_ok=True)
 
-    session = requests_html.HTMLSession()
-
     # If puzzle input file is empty...
     if not script.puzzle_file.read_text().strip():
+        import requests_html  # requests_html is super slow to import from some reason
+        import pendulum  # pendulum is also slow to import
+
+        session = requests_html.HTMLSession()
+
         puzzle_start = pendulum.datetime(
             int(script.year), 12, int(script.day), 0, 0, 0, tz="US/Eastern"
         )
@@ -55,6 +55,7 @@ def get_puzzle(script_filename: str) -> str:
 
         # ...download the puzzle if the AOC session token is set in env vars
         if aoc_token():
+
             response = session.get(
                 script.puzzle_url,
                 cookies={"session": aoc_token()},
@@ -77,6 +78,9 @@ def get_puzzle(script_filename: str) -> str:
     prompt_file = script.prompt_file.read_text().strip()
 
     if "Part Two" not in prompt_file:
+        import requests_html  # requests_html is super slow to import from some reason
+
+        session = requests_html.HTMLSession()
         response = session.get(
             script.prompt_url,
             cookies={"session": aoc_token()},

@@ -5,7 +5,6 @@ from .ints import ints
 
 
 def parse_text(fn: Callable):
-
     @functools.wraps(fn)
     def fn_override(raw: str) -> int | str:
         text = dedent(raw).strip()

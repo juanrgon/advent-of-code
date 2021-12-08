@@ -17,7 +17,7 @@ class AocCommand(click.MultiCommand):
         return {
             p.stem: self.get_command(None, p.stem)
             for p in (Path(__file__).parent / "commands").iterdir()
-            if p.suffix == '.py' and not p.name.startswith('_')
+            if p.suffix == ".py" and not p.name.startswith("_")
         }
 
     def get_command(self, ctx, name):

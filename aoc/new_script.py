@@ -10,10 +10,7 @@ def new_script(year: str, day: str, overwrite: bool = False) -> Path:
 
     script_dir = Path(__file__).parent.parent / year / day
 
-    if (
-        script_dir.exists()
-        and not overwrite
-    ):
+    if script_dir.exists() and not overwrite:
         if pendulum.now() > pendulum.datetime(year=int(year), month=12, day=int(day)):
             logger.info("Allow override of solution file, because in the future")
         else:

@@ -54,15 +54,14 @@ def status(refresh_from_site: bool):
 
     for year in years:
         print(year)
-        print('----')
+        print("----")
 
         if not years[year]:
             print("not yet started")
             print()
             continue
 
-
         for day, parts in years[year].items():
-            print(f'Day {str(day).rjust(2)}', terminology.in_yellow('*' * parts))
+            print(f"Day {str(day).rjust(2)}", terminology.in_yellow("*" * parts))
 
         print()

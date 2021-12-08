@@ -25,7 +25,7 @@ def submit(local_scriptpath: str, parts: list[int]):
     spec.loader.exec_module(module)
 
     for i in parts:
-        part = getattr(module, f'part_{i}')
+        part = getattr(module, f"part_{i}")
 
         puzzle = aoc.get_puzzle(script)
 

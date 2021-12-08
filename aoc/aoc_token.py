@@ -1,21 +1,22 @@
 import os
 import textwrap
-from functools import lru_cache
-from dotenv import load_dotenv
-
-# Load env vars from local .env file if it exists
-load_dotenv()
+from functools import cache
 
 
-@lru_cache
+@cache
 def aoc_token() -> str:
+    # Load env vars from local .env file if it exists
+    from dotenv import load_dotenv  # this is slow to import
+
+    load_dotenv()
+
     aoc_token_env_var = "ADVENT_OF_CODE_COOKIE"
     aoc_token_value = os.environ.get(aoc_token_env_var, "")
 
     if not aoc_token_value:
         print(
             textwrap.dedent(
-            f"""
+                f"""
             {aoc_token_env_var} isn't set, so the puzzle input can't be automatically
             downloaded, and puzzle solutions can't be automatically submitted.
 
