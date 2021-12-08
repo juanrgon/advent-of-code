@@ -68,20 +68,21 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
         two_three_or_five = []
         zero_six_or_nine = []
 
-        # find 2, 4, 3, and 7
+        # find 1, 4, 7, and 8
         for signal in signals:
-            if len(signal) == 2:
-                nums[1] = signal
-            elif len(signal) == 4:
-                nums[4] = signal
-            elif len(signal) == 3:
-                nums[7] = signal
-            elif len(signal) == 7:
-                nums[8] = signal
-            elif len(signal) == 5:
-                two_three_or_five.append(signal)
-            elif len(signal) == 6:
-                zero_six_or_nine.append(signal)
+            match len(signal):
+                case 2:
+                    nums[1] = signal
+                case 4:
+                    nums[4] = signal
+                case 3:
+                    nums[7] = signal
+                case 7:
+                    nums[8] = signal
+                case 5:
+                    two_three_or_five.append(signal)
+                case 6:
+                    zero_six_or_nine.append(signal)
 
         # find 2, 3, and 5
         for signal in two_three_or_five:
