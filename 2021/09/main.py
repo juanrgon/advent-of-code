@@ -115,19 +115,19 @@ def basin(strs, i, j, visited) -> int:
 
     size = 1
     # left num
-    if j - 1 >= 0 and row[j - 1] > num:
+    if j - 1 >= 0:
         size += basin(strs, i, j-1, visited)
 
     # right num
-    if (j + 1) < len(row) and row[j + 1] > num:
+    if (j + 1) < len(row):
         size += basin(strs, i, j+1, visited)
 
     # upper num
-    if i - 1 >= 0 and strs[i - 1][j] > num:
+    if i - 1 >= 0:
         size += basin(strs, i-1, j, visited)
 
     # bottom num
-    if (i + 1) < len(strs) and strs[i + 1][j] > num:
+    if (i + 1) < len(strs):
         size += basin(strs, i+1, j, visited)
 
     return size
