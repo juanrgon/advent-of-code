@@ -1,4 +1,4 @@
-TEST = (
+TEST = [(
     """
 be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
@@ -12,9 +12,9 @@ egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
 """,
     26,
-)
+)]
 
-TEST2 = (
+TEST2 = [(
     """
 be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
@@ -28,14 +28,15 @@ egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
 """,
     61229,
-)
+)]
 
 
-from functools import singledispatch
 import aoc
 
 
-@aoc.tests([TEST])
+@aoc.submit(part=1)
+@aoc.get_input
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     count = 0
@@ -53,7 +54,9 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
     return count
 
 
-@aoc.tests([TEST2])
+@aoc.submit(part=2)
+@aoc.get_input
+@aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     total = 0
@@ -119,10 +122,5 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
 
 
 if __name__ == "__main__":
-    puzzle = aoc.get_puzzle(__file__)
-
-    part_1.test()
-    print("Part 1:", part_1(puzzle))
-
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))

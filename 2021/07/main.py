@@ -1,27 +1,31 @@
-TEST = (
+TEST = [(
 """
 16,1,2,0,4,2,7,1,2,14
 """,
     37,
-)
+)]
 
-TEST2 = (
+TEST2 = [(
 """
 16,1,2,0,4,2,7,1,2,14
 """,
     168,
-)
+)]
 
 import aoc
 
 
-@aoc.tests([TEST])
+@aoc.submit(part=1)
+@aoc.get_input
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     return min(total_cost(ints, i) for i in range(min(ints), max(ints)))
 
 
-@aoc.tests([TEST2])
+@aoc.submit(part=2)
+@aoc.get_input
+@aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     return min(total_cost_2(ints, i) for i in range(min(ints), max(ints)))
@@ -41,10 +45,5 @@ def cost_2(current, new):
 
 
 if __name__ == "__main__":
-    puzzle = aoc.get_puzzle(__file__)
-
-    part_1.test()
-    print("Part 1:", part_1(puzzle))
-
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))

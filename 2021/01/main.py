@@ -1,4 +1,6 @@
-TEST = """
+TEST = [
+    (
+        """
 199
 200
 208
@@ -9,24 +11,45 @@ TEST = """
 269
 260
 263
-"""
+""",
+        7,
+    )
+]
 
-import sys
-from pathlib import Path
+TEST2 = [
+    (
+        """
+199
+200
+208
+210
+200
+207
+240
+269
+260
+263
+""",
+        5,
+    )
+]
+
 from more_itertools import windowed
 
-# import local AOC lib
-sys.path.append(str(Path(__file__).parent.parent.parent))
 import aoc
 
 
-@aoc.tests([(TEST, 7)])
+@aoc.submit(part=1)
+@aoc.get_input
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     return sum([int(b > a) for a, b in windowed(ints, 2, fillvalue=0)])
 
 
-@aoc.tests([(TEST, 5)])
+@aoc.submit(part=1)
+@aoc.get_input
+@aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     return sum(
@@ -42,10 +65,5 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
 
 
 if __name__ == "__main__":
-    puzzle = (Path(__file__).parent / "input").read_text().strip()
-
-    part_1.test()
-    print("Part 1:", part_1(puzzle))
-
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))

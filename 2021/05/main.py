@@ -1,4 +1,4 @@
-TEST = (
+TEST = [(
     """
 0,9 -> 5,9
 8,0 -> 0,8
@@ -12,9 +12,9 @@ TEST = (
 5,5 -> 8,2
 """,
     5,
-)
+)]
 
-TEST2 = (
+TEST2 = [(
 """
 0,9 -> 5,9
 8,0 -> 0,8
@@ -28,12 +28,11 @@ TEST2 = (
 5,5 -> 8,2
 """,
     12,
-)
+)]
 
 import attr
 from collections import defaultdict
 
-# import local AOC lib
 import aoc
 
 
@@ -100,7 +99,9 @@ class Grid:
             print()
 
 
-@aoc.tests([TEST])
+@aoc.submit(part=1)
+@aoc.get_input
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     vents = []
@@ -110,7 +111,9 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
     return len([times for times in grid.hits.values() if times > 1])
 
 
-@aoc.tests([TEST2])
+@aoc.submit(part=2)
+@aoc.get_input
+@aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     vents = []
@@ -121,10 +124,5 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
 
 
 if __name__ == "__main__":
-    puzzle = aoc.get_puzzle(__file__)
-
-    part_1.test()
-    print("Part 1:", part_1(puzzle))
-
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))

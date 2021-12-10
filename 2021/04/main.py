@@ -1,4 +1,4 @@
-TEST = (
+TEST = [(
     """
 7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
 
@@ -21,9 +21,9 @@ TEST = (
  2  0 12  3  7
 """,
     4512,
-)
+)]
 
-TEST2 = (
+TEST2 = [(
     """
 7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
 
@@ -46,7 +46,7 @@ TEST2 = (
  2  0 12  3  7
 """,
     1924,
-)
+)]
 
 import sys
 from pathlib import Path
@@ -125,7 +125,9 @@ class BingoBoard:
         print()
 
 
-@aoc.tests([TEST])
+@aoc.submit(part=1)
+@aoc.get_input
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     bings = aoc.ints(strs[0])
@@ -144,7 +146,9 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
         #     pass
 
 
-@aoc.tests([TEST2])
+@aoc.submit(part=2)
+@aoc.get_input
+@aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     bings = aoc.ints(strs[0])
@@ -173,10 +177,5 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
 
 
 if __name__ == "__main__":
-    puzzle = aoc.get_puzzle(__file__)
-
-    part_1.test()
-    print("Part 1:", part_1(puzzle))
-
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))

@@ -1,4 +1,4 @@
-TEST = (
+TEST = [(
     """
 00100
 11110
@@ -14,9 +14,9 @@ TEST = (
 01010
 """,
     198,
-)
+)]
 
-TEST2 = (
+TEST2 = [(
     """
 00100
 11110
@@ -32,7 +32,7 @@ TEST2 = (
 01010
 """,
     230,
-)
+)]
 
 
 import sys
@@ -45,7 +45,9 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 import aoc
 
 
-@aoc.tests([TEST])
+@aoc.submit(part=1)
+@aoc.get_input
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
 
@@ -64,7 +66,9 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
     return int(gr, 2) * int(er, 2)
 
 
-@aoc.tests([TEST2])
+@aoc.submit(part=2)
+@aoc.get_input
+@aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     oxy = strs
@@ -90,10 +94,5 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
 
 
 if __name__ == "__main__":
-    puzzle = aoc.get_puzzle(__file__)
-
-    part_1.test()
-    print("Part 1:", part_1(puzzle))
-
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))
