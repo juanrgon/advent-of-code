@@ -3,9 +3,7 @@ from collections.abc import Iterable
 from typing import (
     Any,
     Callable,
-    Dict,
     Iterable,
-    List,
     ParamSpec,
     TypeVar,
 )
@@ -34,12 +32,12 @@ def tests(cases: Iterable[tuple[str, int]]) -> F:
 
 @attr.define
 class TestCase:
-    args: List[Any] | None = None
-    kwargs: Dict[str, Any] | None = None
+    args: list[Any] | None = None
+    kwargs: dict[str, Any] | None = None
     expected: str | int | None = None
 
 
-def _test_function(fn, test_cases: List[TestCase]):
+def _test_function(fn, test_cases: list[TestCase]):
     for i, test_case in enumerate(test_cases):
         solution = fn(*(test_case.args or []), **(test_case.kwargs or {}))
 

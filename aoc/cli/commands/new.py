@@ -1,10 +1,9 @@
 import click
 import pendulum
 import subprocess
-import aoc.new_script
 import os
-import logging
 from pathlib import Path
+import pendulum
 
 
 @click.command()
@@ -21,13 +20,12 @@ from pathlib import Path
 def new(year: int, day: int):
     """Create new script for AOC"""
 
-    
     year = click.prompt(f"Year", default=_get_year())
     day = click.prompt(f"Day", default=_get_day(year))
 
     click.prompt("Please enter a valid integer", type=int)
 
-    script_file = aoc.new_script(year=year, day=day)
+    script_file = _new_script(year=year, day=day)
 
     print(f"Created script {script_file}!")
 
@@ -63,3 +61,31 @@ def _get_day(year: int) -> int:
         return 1
     else:
         return max([int(p.stem) for p in year_dir.iterdir()]) + 1
+
+
+def _new_script(year: str, day: str, overwrite: bool = False) -> Path:
+    day = day.zfill(2)
+
+    script_dir = Path(__file__).parent.parent / year / day
+
+    if script_dir.exists() and not overwrite:
+        if pendulum.now() > pendulum.datetime(year=int(year), month=12, day=int(day)):
+            print("Allow override of solution file, because script date in the future")
+        else:
+            raise RuntimeError(f"Script already exists for {year}-{day}!!!")
+
+    script_dir.mkdir(parents=True, exist_ok=True)
+
+    filename = "main.py"
+
+    script = script_dir / filename
+    puzzle = script_dir / "input"
+
+    script.touch(exist_ok=True)
+    puzzle.touch(exist_ok=True)
+
+    script.write_text(
+        (Path(__file__).parent / "templates" / "script" / filename).read_text()
+    )
+
+    return script

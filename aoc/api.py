@@ -1,10 +1,54 @@
+"""
+API client for adventofcode.com
+"""
+
+from __future__ import annotations
 import os
 import textwrap
 from functools import cache
+import typing
+from typing import Callable, ParamSpec
+
+
+P = ParamSpec("P")
+
+
+if typing.TYPE_CHECKING:
+    import requests_html
+
+
+def _raise_for_status(
+    fn: Callable[P, requests_html.HTMLResponse]
+) -> Callable[P, requests_html.HTMLResponse]:
+    def fn_override(*args: P.args, **kwargs: P.kwargs):
+        response = fn(*args, **kwargs)
+        response.raise_for_status()
+        return response
+
+    return fn_override
+
+
+@_raise_for_status
+def get(url: str) -> requests_html.HTMLResponse:
+    return _session().get(url)
+
+
+@_raise_for_status
+def post(url: str, data: dict) -> requests_html.HTMLResponse:
+    return _session().post(url, data=data)
 
 
 @cache
-def aoc_token() -> str:
+def _session() -> requests_html.HTMLSession:
+    import requests_html  # this is slow to import
+
+    session = requests_html.HTMLSession()
+    session.cookies.set("session", _aoc_token(), domain=".adventofcode.com")
+    return session
+
+
+@cache
+def _aoc_token() -> str:
     # Load env vars from local .env file if it exists
     from dotenv import load_dotenv  # this is slow to import
 

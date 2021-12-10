@@ -1,14 +1,10 @@
 import click
 import requests
-import requests_html
 import pendulum
-from aoc.aoc_token import aoc_token
-import yaml
+import aoc.status
 from pathlib import Path
 import terminology
-
-
-FIRST_YEAR = 2015
+import aoc.api
 
 
 @click.command()
@@ -18,50 +14,41 @@ FIRST_YEAR = 2015
 def status(refresh_from_site: bool):
     """Load and display the current status for each year of AOC."""
 
-    years = {}
+    status = aoc.status.get()
 
-    status_file = Path(__file__).parent.parent.parent.parent / ".status.yaml"
+    if refresh_from_site or not status:
+        status = {}
 
-    if refresh_from_site or not status_file.exists():
         today = pendulum.now("US/Eastern")
         most_recent_year = today.year if today.month == 12 else today.year - 1
 
-        for year in range(FIRST_YEAR, most_recent_year + 1):
-            years[year] = {}
+        response = aoc.api.get(f"https://adventofcode.com/events")
+        response.raise_for_status()
 
-            response = requests.get(
-                f"https://adventofcode.com/{year}", cookies={"session": aoc_token()}
-            )
+        for event in response.html.find(".eventlist-event"):
+            # HTML Parsing
+            year = int(event.find("a", first=True).text.strip("[] "))
+            star_count = event.find(".star-count", first=True)
 
-            if response is None:
-                import ipdb
+            status[year] = {}
 
-                ipdb.set_trace()
-
-            star_count = requests_html.HTML(html=response.text).find(
-                ".star-count", first=True
-            )
-            total_stars = int(star_count.text.strip("*")) if star_count else 0
-
-            for star in range(total_stars):
+            for star in range(int(star_count.text.strip("*")) if star_count else 0):
                 day = int(star / 2) + 1
-                years[year][day] = star % 2 + 1
+                status[year][day] = star % 2 + 1
 
-        print(f"Loading status from adventofcode.com to {status_file}\n")
-        status_file.write_text(yaml.safe_dump(years, default_flow_style=False))
+        print(f"Loading status from adventofcode.com to disk\n")
+        aoc.status.save(status)
 
-    years = yaml.safe_load(status_file.read_text())
-
-    for year in years:
+    for year in sorted(status):
         print(year)
         print("----")
 
-        if not years[year]:
+        if not status[year]:
             print("not yet started")
             print()
             continue
 
-        for day, parts in years[year].items():
+        for day, parts in status[year].items():
             print(f"Day {str(day).rjust(2)}", terminology.in_yellow("*" * parts))
 
         print()
