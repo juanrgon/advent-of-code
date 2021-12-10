@@ -53,9 +53,9 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
     scores = []
 
     for s in strs:
-        _score, opened = score(s)
-        if _score == 0:
-            scores.append(complete(opened))
+        match score(s):
+            case 0, opened:
+                scores.append(complete(opened))
 
     return sorted(scores)[int(len(scores) / 2)]
 
