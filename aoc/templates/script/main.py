@@ -18,13 +18,13 @@ TEST2 = [
 import aoc
 
 
-@aoc.tests([TEST])
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     return 0
 
 
-@aoc.tests([TEST2])
+@aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     return 0
