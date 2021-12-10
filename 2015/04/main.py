@@ -18,7 +18,7 @@ from itertools import count
 
 
 @aoc.submit(part=1)
-@aoc.load_puzzle
+@aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
@@ -30,7 +30,7 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 
 
 @aoc.submit(part=2)
-@aoc.load_puzzle
+@aoc.get_input
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     for i in count():

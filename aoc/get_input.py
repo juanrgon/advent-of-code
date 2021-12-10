@@ -9,16 +9,16 @@ import aoc.status
 T = TypeVar("T")
 
 
-def load_puzzle(fn: Callable[[str], T]) -> Callable[[str], T]:
+def get_input(fn: Callable[[str], T]) -> Callable[[str], T]:
     def fn_override(script_filename) -> T:
-        raw = _load_puzzle(script_filename)
+        raw = _get_input(script_filename)
         return fn(raw)
 
     return fn_override
 
 
 @cache
-def _load_puzzle(script_filename: str) -> str:
+def _get_input(script_filename: str) -> str:
     """
     Return the puzzle input for the given aoc solution script filepath.
 

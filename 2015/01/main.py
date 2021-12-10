@@ -1,5 +1,5 @@
 TEST = [
-    ("(())",0),
+    ("(())", 0),
     ("()()", 0),
     ("(()(()(", 3),
 ]
@@ -14,13 +14,13 @@ import aoc
 
 
 @aoc.submit(part=1)
-@aoc.load_puzzle
+@aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     f = 0
     for char in raw:
-        if char == '(':
+        if char == "(":
             f += 1
         else:
             f -= 1
@@ -28,13 +28,13 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 
 
 @aoc.submit(part=2)
-@aoc.load_puzzle
+@aoc.get_input
 @aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     f = 0
     for i, char in enumerate(raw):
-        if char == '(':
+        if char == "(":
             f += 1
         else:
             f -= 1
