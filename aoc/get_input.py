@@ -5,6 +5,7 @@ import sys
 from functools import cache
 from typing import Callable, TypeVar
 import aoc.status
+import aoc.api
 
 T = TypeVar("T")
 
@@ -51,8 +52,13 @@ def _get_input(script_filename: str) -> str:
     script = Script.from_filename(script_filename)
 
     # create the puzzle file if it doesn't already exist
-    script.puzzle_file.touch(exist_ok=True)
+    script.input_file.touch(exist_ok=True)
 
+    _download_prompt(script)
+
+    return _download_input(script)
+
+def _download_prompt(script):
     # Create prompt file if it doesn't already exist
     script.prompt_file.touch(exist_ok=True)
 
@@ -65,11 +71,13 @@ def _get_input(script_filename: str) -> str:
         if not html:
             print("Failed to download prompt!")
 
-        print(f"Downloaded puzzle to {str(script.prompt_file)}")
+        print(f"Downloaded prompt to {str(script.prompt_file)}")
         script.prompt_file.write_text(_html_to_markdown(html))
 
+
+def _download_input(script) -> str:
     # If puzzle input file is empty...
-    if not script.puzzle_file.read_text().strip():
+    if not script.input_file.read_text().strip():
         import pendulum  # pendulum is also slow to import
 
         puzzle_start = pendulum.datetime(
@@ -82,11 +90,10 @@ def _get_input(script_filename: str) -> str:
         # download the input
         response = aoc.api.get(script.puzzle_url)
         response.raise_for_status()
-        script.puzzle_file.write_text(response.text)
-        print(f"Downloaded input to {str(script.puzzle_file)}")
-        sys.exit(0)
+        script.input_file.write_text(response.text)
+        print(f"Downloaded input to {str(script.input_file)}")
 
-    return script.puzzle_file.read_text().strip()
+    return script.input_file.read_text().strip()
 
 
 def _html_to_markdown(_html):

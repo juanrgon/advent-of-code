@@ -11,7 +11,7 @@ class Script:
 
     path: Path
     prompt_file: Path
-    puzzle_file: Path
+    input_file: Path
     prompt_url: str
     puzzle_url: str
     submit_url: str
@@ -30,8 +30,8 @@ class Script:
             day=day,
             year=year,
             path=path,
-            prompt_file=path.parent / "puzzle.md",
-            puzzle_file=path.parent / "input",
+            prompt_file=path.parent / "prompt.md",
+            input_file=path.parent / "input",
             prompt_url=f"{url}",
             puzzle_url=f"{url}/input",
             submit_url=f"{url}/answer",
