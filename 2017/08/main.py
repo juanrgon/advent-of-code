@@ -1,20 +1,20 @@
-TEST = (
+TEST = [(
     """
 b inc 5 if a > 1
 a inc 1 if b < 5
 c dec -10 if a >= 1
 c inc -20 if c == 10
 """, 1
-)
+)]
 
-TEST2 = (
+TEST2 = [(
 """
 b inc 5 if a > 1
 a inc 1 if b < 5
 c dec -10 if a >= 1
 c inc -20 if c == 10
 """, 10
-)
+)]
 
 import sys
 from pathlib import Path
@@ -23,7 +23,9 @@ from collections import defaultdict
 import aoc
 
 
-@aoc.tests([TEST])
+@aoc.submit(part=1)
+@aoc.get_input
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     registers: defaultdict[str, int] = defaultdict(int)
@@ -40,7 +42,9 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
     return max(registers.values())
 
 
-@aoc.tests([TEST2])
+@aoc.submit(part=2)
+@aoc.get_input
+@aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     highest = 0
@@ -60,10 +64,5 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
 
 
 if __name__ == "__main__":
-    puzzle = aoc.get_puzzle(__file__)
-
-    part_1.test()
-    print("Part 1:", part_1(puzzle))
-
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))

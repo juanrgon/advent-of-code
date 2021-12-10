@@ -1,4 +1,4 @@
-TEST = (
+TEST = [(
     """
 pbga (66)
 xhth (57)
@@ -15,9 +15,9 @@ gyxo (61)
 cntj (57)
 """,
     "tknk",
-)
+)]
 
-TEST2 = (
+TEST2 = [(
     """
 pbga (66)
 xhth (57)
@@ -34,7 +34,7 @@ gyxo (61)
 cntj (57)
 """,
     60,
-)
+)]
 
 
 import sys
@@ -57,7 +57,9 @@ class Node:
         return self.weight + sum([c.total_weight() for c in self.children], start=0)
 
 
-@aoc.tests([TEST])
+@aoc.submit(part=1)
+@aoc.get_input
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: List[int], strs: List[str]):
     held = set()
@@ -79,7 +81,9 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
     return list(all.difference(held))[0]
 
 
-@aoc.tests([TEST2])
+@aoc.submit(part=2)
+@aoc.get_input
+@aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: List[int], strs: List[str]):
     held = set()
@@ -125,14 +129,5 @@ def new_weight(node):
 
 
 if __name__ == "__main__":
-    puzzle = (Path(__file__).parent / "input").read_text().strip()
-
-    part_1.test()
-
-    if not puzzle:
-        raise RuntimeError("input puzzle is empty!!")
-
-    print("Part 1:", part_1(puzzle))
-
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))

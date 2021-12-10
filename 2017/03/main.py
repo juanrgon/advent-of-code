@@ -27,6 +27,8 @@ from itertools import count
 import aoc
 
 
+@aoc.submit(part=1)
+@aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
@@ -81,6 +83,8 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
     return abs(m - int(s / 2)) + int(s / 2)
 
 
+@aoc.submit(part=2)
+@aoc.get_input
 @aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
@@ -143,10 +147,5 @@ class Vector:
 
 if __name__ == "__main__":
 
-    puzzle = aoc.get_puzzle(__file__)
-
-    part_1.test()
-    print("Part 1:", part_1(puzzle))
-
-    part_2.test()
-    print("Part 2:", part_2(puzzle))
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))

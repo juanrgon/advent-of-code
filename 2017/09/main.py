@@ -18,7 +18,7 @@ TEST2 = (
     (r"{<a>,<a>,<a>,<a>}", 4),
     (r"{{<ab>},{<ab>},{<ab>},{<ab>}}", 8),
     (r"{{<!!>},{<!!>},{<!!>},{<!!>}}", 0),
-    (r"{{<a!>},{<a!>},{<a!>},{<ab>}}", 14),
+    (r"{{<a!>},{<a!>},{<a!>},{<ab>}}", 17),
     (r'<{o"i!a,<{i<a>', 10),
 )
 
@@ -31,6 +31,8 @@ import string
 import subprocess
 
 
+@aoc.submit(part=1)
+@aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
@@ -66,6 +68,8 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
     return score
 
 
+@aoc.submit(part=2)
+@aoc.get_input
 @aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
@@ -89,15 +93,5 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
 
 
 if __name__ == "__main__":
-    puzzle = aoc.get_puzzle(__file__)
-
-    prompt = (Path(__file__).parent / "puzzle.md").read_text()
-
-    part_1.test()
-    print("Part 1:", part_1(puzzle))
-
-    if '--- Part Two ---' in prompt:
-        part_2.test()
-        print("Part 2:", part_2(puzzle))
-    else:
-        puzzle = aoc.get_puzzle(__file__)
+    print("Part 1:", part_1(__file__))
+    print("Part 2:", part_2(__file__))

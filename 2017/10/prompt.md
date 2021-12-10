@@ -56,11 +56,7 @@ Second, instead of merely running one **round** like you did above, run a total 
 Once the rounds are complete, you will be left with the numbers from `0` to `255` in some order, called the **sparse hash**. Your next task is to reduce these to a list of only `16` numbers called the **dense hash**. To do this, use numeric bitwise <a href="https://en.wikipedia.org/wiki/Bitwise_operation#XOR">XOR</a> to combine each consecutive block of `16` numbers in the sparse hash (there are `16` such blocks in a list of `256` numbers). So, the first element in the dense hash is the first sixteen elements of the sparse hash XOR'd together, the second element in the dense hash is the second sixteen elements of the sparse hash XOR'd together, etc.
 
 For example, if the first sixteen elements of your sparse hash are as shown below, and the XOR operator is `^`, you would calculate the first output number like this:
-
-```
-65 ^ 27 ^ 9 ^ 1 ^ 4 ^ 3 ^ 40 ^ 50 ^ 91 ^ 7 ^ 6 ^ 0 ^ 2 ^ 5 ^ 68 ^ 22 = 64
-```
-
+<pre>`65 ^ 27 ^ 9 ^ 1 ^ 4 ^ 3 ^ 40 ^ 50 ^ 91 ^ 7 ^ 6 ^ 0 ^ 2 ^ 5 ^ 68 ^ 22 = 64`</pre>
 Perform this operation on each of the sixteen blocks of sixteen numbers in your sparse hash to determine the sixteen numbers in your dense hash.
 <p>Finally, the standard way to represent a Knot Hash is as a single <a href="https://en.wikipedia.org/wiki/Hexadecimal">hexadecimal</a> string; the final output is the dense hash in hexadecimal notation. Because each number in your dense hash will be between `0` and `255` (inclusive), always represent each number as two hexadecimal digits (including a leading zero as necessary). So, if your first three numbers are `64, 7, 255`, they correspond to the hexadecimal numbers `40, 07, ff`, and so the first six characters of the hash would be `4007ff`. Because every Knot Hash is sixteen such numbers, the hexadecimal representation is always `32` hexadecimal digits (`0`-`f`) long.
 Here are some example hashes:
