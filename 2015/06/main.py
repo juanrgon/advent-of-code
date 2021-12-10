@@ -62,7 +62,6 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 def part_2(raw: str, ints: list[int], strs: list[str]):
     grid = defaultdict(lambda: defaultdict(int))
 
-    ons = 0
     for line in strs:
         line, b = line.split(" through ")
         inst, a = line.rsplit(" ", 1)
