@@ -16,7 +16,8 @@ import functools
 import aoc
 
 
-@aoc.tests([TEST])
+@aoc.submit(part=1)
+@aoc.tests(TEST)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     match strs:
@@ -45,6 +46,7 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
     return nums[0] * nums[1]
 
 
+@aoc.submit(part=1)
 @aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
