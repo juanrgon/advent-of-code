@@ -2,8 +2,10 @@ from .aoc_token import aoc_token
 from .script import Script
 import re
 import html
+from functools import cache
 
 
+@cache
 def get_puzzle(script_filename: str) -> str:
     """
     Return the puzzle input for the given aoc solution script filepath.

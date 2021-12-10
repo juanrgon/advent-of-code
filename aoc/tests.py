@@ -1,24 +1,41 @@
-from typing import Any, Dict, List, Optional, Union, Iterable
+import functools
+from collections.abc import Iterable
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Iterable,
+    List,
+    ParamSpec,
+    TypeVar,
+)
+
 import attr
 
+P = ParamSpec("P")
+T = TypeVar("T")
 
-def tests(cases: Iterable[str | Any]):
-    def decorator(fn):
-        def test():
-            _test_function(fn, fn.test_cases)
+F = Callable[P, T]
 
-        fn.test_cases = [TestCase(args=[i], kwargs=[], expected=e) for i, e in cases]
-        fn.test = test
 
-        return fn
+def tests(cases: Iterable[tuple[str, int]]) -> F:
+    def decorator(fn: F) -> F:
+        @functools.wraps(fn)
+        def fn_override(*args: P.args, **kwargs: P.kwargs):
+            fn.test = _test_function(
+                fn, [TestCase(args=[i], kwargs=None, expected=e) for i, e in cases]
+            )
+            return fn(*args, **kwargs)
+
+        return fn_override
 
     return decorator
 
 
 @attr.define
 class TestCase:
-    args: list[Any] | None = None
-    kwargs: dict[str, Any] | None = None
+    args: List[Any] | None = None
+    kwargs: Dict[str, Any] | None = None
     expected: str | int | None = None
 
 

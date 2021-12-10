@@ -33,7 +33,7 @@ def _default_date() -> pendulum.DateTime:
             # you probably want to do yesteray's date
             return pendulum.today(east)
 
-    year = int(os.environ["AOC_YEAR"]) or now.year
+    year = int(os.environ.get("AOC_YEAR",0)) or now.year
 
     year_dir = Path(__file__).parent.parent.parent.parent / str(year)
 

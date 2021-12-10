@@ -4,6 +4,7 @@ from pathlib import Path
 import importlib
 
 
+
 class AocCommand(click.MultiCommand):
     """
     Click command with lazy loading subcommands.
@@ -22,6 +23,8 @@ class AocCommand(click.MultiCommand):
 
     def get_command(self, ctx, name):
         """Return the names of all the files in the commands dir."""
+        from dotenv import load_dotenv  # this is slow to import
+        load_dotenv()
         return getattr(importlib.import_module(f"aoc.cli.commands.{name}"), name)
 
 
