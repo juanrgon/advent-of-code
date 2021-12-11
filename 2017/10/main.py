@@ -22,7 +22,6 @@ import aoc
 
 
 @aoc.submit(part=1)
-@aoc.submit(part=1)
 @aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
@@ -53,7 +52,6 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
     return nums[0] * nums[1]
 
 
-@aoc.submit(part=1)
 @aoc.submit(part=2)
 @aoc.get_input
 @aoc.tests(TEST2)
