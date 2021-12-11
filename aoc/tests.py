@@ -20,9 +20,14 @@ def tests(cases: Iterable[tuple[str, int]]) -> F:
     def decorator(fn: F) -> F:
         @functools.wraps(fn)
         def fn_override(*args: P.args, **kwargs: P.kwargs):
-            fn.test = _test_function(
-                fn, [TestCase(args=[i], kwargs=None, expected=e) for i, e in cases]
+
+            _test_function(
+                fn=fn,
+                test_cases=[
+                    TestCase(args=[i], kwargs=None, expected=e) for i, e in cases
+                ],
             )
+
             return fn(*args, **kwargs)
 
         return fn_override

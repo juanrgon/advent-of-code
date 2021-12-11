@@ -1,34 +1,34 @@
-TEST = [
-(
-"""
-""",
--42
-),
-]
-
-TEST2 = [
-(
-"""
-""",
--42
-),
-]
-
-
 import aoc
+
+
+TESTS = [
+(
+"""
+""",
+-42
+),
+]
 
 
 @aoc.submit(part=1)
 @aoc.get_input
-@aoc.tests(TEST)
+@aoc.tests(TESTS)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
     return 0
 
 
+TESTS = [
+(
+"""
+""",
+-42
+),
+]
+
 @aoc.submit(part=2)
 @aoc.get_input
-@aoc.tests(TEST2)
+@aoc.tests(TESTS)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     return 0
