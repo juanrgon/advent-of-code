@@ -48,7 +48,19 @@ class Grid(list[list[T]]):
 
     def subgrid(self, start: tuple[int, int], end: tuple[int, int]) -> Grid[T]:
         (row_0, col_0), (row_1, col_1) = start, end
-        return type(self)([row[col_0: col_1] for row in self[row_0: row_1]])
+        return type(self)([row[col_0: col_1 + 1] for row in self[row_0: row_1 + 1]])
+
+    def for_each(self, f):
+        for v in self.values():
+            f(v)
+
+    def values(self):
+        v = []
+
+        for row in self:
+            v.extend(row)
+
+        return v
 
     def __str__(self):
         x = ""

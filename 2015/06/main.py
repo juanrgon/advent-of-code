@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 TEST = [
     (
         """
@@ -15,13 +17,45 @@ TEST2 = [
 turn on 0,0 through 0,0
 toggle 0,0 through 999,999
 """,
-        1 + 2_000_000
+        1 + 2_000_000,
     ),
 ]
 
 
+from re import sub
 import aoc
 from collections import defaultdict
+import attr
+
+
+@attr.define
+class Light:
+    brightness: int = 0
+
+    @classmethod
+    def turn_on_1(cls, light: Light):
+        light.brightness = max(light.brightness + 1, 1)
+
+
+    @classmethod
+    def turn_off_1(cls, light: Light):
+        light.brightness = min(light.brightness - 1, 0)
+
+    @classmethod
+    def toggle_1(cls, light: Light):
+        light.brightness = 0 if light.brightness else 1
+
+    @classmethod
+    def turn_on_2(cls, light: Light):
+        light.brightness += 1
+
+    @classmethod
+    def turn_off_2(cls, light: Light):
+        light.brightness = max(light.brightness - 1, 0)
+
+    @classmethod
+    def toggle_2(cls, light: Light):
+        light.brightness += 2
 
 
 @aoc.submit(part=1)
@@ -30,29 +64,23 @@ from collections import defaultdict
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
 
-    grid = defaultdict(lambda: defaultdict(bool))
+    grid = aoc.Grid.of(Light, height=1000, width=1000)
 
     for line in strs:
         line, b = line.split(" through ")
         inst, a = line.rsplit(" ", 1)
 
-        a_x, a_y = aoc.ints(a.split(","))
-        b_x, b_y = aoc.ints(b.split(","))
+        subgrid = grid.subgrid(aoc.ints(a.split(",")), aoc.ints(b.split(",")))
 
         match inst:
             case "turn on":
-                f = lambda _: True
+                subgrid.for_each(Light.turn_on_1)
             case "turn off":
-                f = lambda _: False
+                subgrid.for_each(Light.turn_off_1)
             case "toggle":
-                f = lambda x: not x
+                subgrid.for_each(Light.toggle_1)
 
-        for x in range(a_x, b_x + 1):
-            for y in range(a_y, b_y + 1):
-                on = f(grid[x][y])
-                grid[x][y] = on
-
-    return sum([sum([int(w) for w in v.values()]) for v in grid.values()])
+    return sum([l.brightness for l in grid.values()])
 
 
 @aoc.submit(part=2)
@@ -60,30 +88,24 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.tests(TEST2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
-    grid = defaultdict(lambda: defaultdict(int))
+    grid = aoc.Grid.of(Light, height=1000, width=1000)
 
     for line in strs:
         line, b = line.split(" through ")
         inst, a = line.rsplit(" ", 1)
 
-        a_x, a_y = aoc.ints(a.split(","))
-        b_x, b_y = aoc.ints(b.split(","))
+        subgrid = grid.subgrid(aoc.ints(a.split(",")), aoc.ints(b.split(",")))
 
         match inst:
             case "turn on":
-                f = lambda x: x + 1
+                subgrid.for_each(Light.turn_on_2)
             case "turn off":
-                f = lambda x: max(x - 1, 0)
+                subgrid.for_each(Light.turn_off_2)
             case "toggle":
-                f = lambda x: x + 2
+                subgrid.for_each(Light.toggle_2)
 
-        for x in range(a_x, b_x + 1):
-            for y in range(a_y, b_y + 1):
-                on = f(grid[x][y])
-                grid[x][y] = on
 
-    return sum([sum([int(w) for w in v.values()]) for v in grid.values()])
-
+    return sum([l.brightness for l in grid.values()])
 
 
 if __name__ == "__main__":
