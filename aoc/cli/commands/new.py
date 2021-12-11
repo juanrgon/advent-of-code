@@ -3,27 +3,22 @@ import pendulum
 import subprocess
 import os
 from pathlib import Path
+from aoc.script import Script
+import aoc.paths
 import pendulum
 
 
 @click.command()
-@click.option(
-    "-y",
-    "--year",
-    type=int,
-)
-@click.option(
-    "-d",
-    "--day",
-    type=int,
-)
-def new(year: int, day: int):
+@click.option("-y", "--year", type=str)
+@click.option("-d", "--day", type=str)
+def new(year: str, day: str):
     """Create new script for AOC"""
 
-    year = click.prompt(f"Year", default=_get_year())
-    day = click.prompt(f"Day", default=_get_day(year))
+    if not year:
+        year = click.prompt(f"Year", default=_get_year())
 
-    click.prompt("Please enter a valid integer", type=int)
+    if not day:
+        day = click.prompt(f"Day", default=_get_day(year))
 
     script_file = _new_script(year=year, day=day)
 
@@ -54,21 +49,22 @@ def _get_year() -> int:
     return int(os.environ.get("AOC_YEAR", 0)) or now.year
 
 
-def _get_day(year: int) -> int:
+def _get_day(year: str) -> str:
     year_dir = Path(__file__).parent.parent.parent.parent / str(year)
 
     if not year_dir.exists():
-        return 1
+        return "1"
     else:
-        return max([int(p.stem) for p in year_dir.iterdir()]) + 1
+        return str(max([int(p.stem) for p in year_dir.iterdir()]) + 1)
 
 
 def _new_script(year: str, day: str, overwrite: bool = False) -> Path:
     day = day.zfill(2)
 
-    script_dir = Path(__file__).parent.parent / year / day
+    script = Script.from_year_day(year=year, day=day)
+    script_dir = script.path.parent
 
-    if script_dir.exists() and not overwrite:
+    if script_dir.parent.exists() and not overwrite:
         if pendulum.now() > pendulum.datetime(year=int(year), month=12, day=int(day)):
             print("Allow override of solution file, because script date in the future")
         else:
@@ -76,16 +72,10 @@ def _new_script(year: str, day: str, overwrite: bool = False) -> Path:
 
     script_dir.mkdir(parents=True, exist_ok=True)
 
-    filename = "main.py"
+    script.path.touch(exist_ok=True)
 
-    script = script_dir / filename
-    puzzle = script_dir / "input"
-
-    script.touch(exist_ok=True)
-    puzzle.touch(exist_ok=True)
-
-    script.write_text(
-        (Path(__file__).parent / "templates" / "script" / filename).read_text()
+    script.path.write_text(
+        (aoc.paths.AOC_PKG / "templates" / "script" / script.path.name).read_text()
     )
 
-    return script
+    return script.path
