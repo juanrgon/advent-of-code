@@ -126,17 +126,17 @@ def part_2(raw: str, ints: list[int], strs: list[str]):
     height = 0
 
     for line in inst.splitlines():
-        x, y = line.split(",")
-        points[(int(x), int(y))] = True
-        width = max(int(x), width)
-        height = max(int(y), height)
+        x, y = aoc.ints(line.split(","))
+        points[x, y] = True
+        width = max(x, width)
+        height = max(y, height)
 
     width = width + 1
     height = height + 1
 
     for f in folds.splitlines():
-        axis, num = f.split()[-1].split("=")
-        num = int(num)
+        axis, n = f.split()[-1].split("=")
+        num = int(n)
         if axis == "y":
             for y in range(num + 1, height):
                 for x in range(width):
