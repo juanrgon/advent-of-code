@@ -1,6 +1,9 @@
 from __future__ import annotations
 import aoc
 from itertools import pairwise
+from functools import cache
+import re
+from collections import Counter, defaultdict
 
 
 # fmt: off
@@ -49,38 +52,15 @@ CN -> C
 ]
 # fmt: on
 
-import re
-from collections import Counter, defaultdict
-
 
 @aoc.submit(part=1)
 @aoc.get_input
 @aoc.tests(TESTS_1)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
-    global translations
     template = strs[0]
-    translations = dict()
-    regex = {}
-    for rules in strs[1:]:
-        a, b = rules.split(" -> ")
-        a0, a1 = list(a)
-
-        translations[a] = f"{a0}{b}"
-
-    for i in range(10):
-        parts = list(template)
-        for j in range(len(template) - 1):
-            s = template[j] + template[j + 1]
-            if s in translations:
-                parts[j] = translations[s]
-        template = "".join(parts)
-
-    c = Counter(template)
-    A = c.most_common(1)[0][1]
-    B = c.most_common(len(set(template)))[-1][1]
-
-    return A - B
+    c = counts(rules="\n".join(strs[1:]), text=template, steps=10)
+    return max(c.values()) - min(c.values())
 
 
 @aoc.submit(part=2)
@@ -89,15 +69,8 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
     template = strs[0]
-
     c = counts(rules="\n".join(strs[1:]), text=template, steps=40)
-    A = max(c.values())
-    B = min(c.values())
-
-    return A - B
-
-
-from functools import cache
+    return max(c.values()) - min(c.values())
 
 
 @cache
