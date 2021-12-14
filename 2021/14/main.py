@@ -10,6 +10,7 @@ from collections import Counter, defaultdict
 TESTS_1 = [
 ("""
 NNCB
+
 CH -> B
 HH -> N
 CB -> H
@@ -32,6 +33,7 @@ CN -> C
 TESTS_2 = [
 ("""
 NNCB
+
 CH -> B
 HH -> N
 CB -> H
@@ -58,8 +60,8 @@ CN -> C
 @aoc.tests(TESTS_1)
 @aoc.parse_text
 def part_1(raw: str, ints: list[int], strs: list[str]):
-    template = strs[0]
-    c = counts(rules="\n".join(strs[1:]), text=template, steps=10)
+    template , rules = raw.split('\n\n')
+    c = counts(rules=rules, text=template, steps=10)
     return max(c.values()) - min(c.values())
 
 
@@ -68,8 +70,8 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.tests(TESTS_2)
 @aoc.parse_text
 def part_2(raw: str, ints: list[int], strs: list[str]):
-    template = strs[0]
-    c = counts(rules="\n".join(strs[1:]), text=template, steps=40)
+    template , rules = raw.split('\n\n')
+    c = counts(rules=rules, text=template, steps=40)
     return max(c.values()) - min(c.values())
 
 
@@ -80,7 +82,7 @@ def counts(*, rules: str, text: str, steps: int) -> dict:
     if steps == 0:
         return Counter(text)
 
-    counter = Counter()
+    counter = Counter({text[0]: 1})
     for a, b in pairwise(text):
         c = translations.get(a + b)
         if c:
@@ -89,8 +91,6 @@ def counts(*, rules: str, text: str, steps: int) -> dict:
         else:
             counter[a] += 1
             counter[b] += 1
-
-    counter[text[0]] += 1
 
     return counter
 
