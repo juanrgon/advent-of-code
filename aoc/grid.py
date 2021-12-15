@@ -3,6 +3,9 @@ import textwrap
 import attr
 from typing import TypeVar, Callable, ParamSpec, Generic
 import terminology
+from collections import defaultdict
+from itertools import chain
+from functools import cache
 
 
 P = ParamSpec("P")
@@ -12,7 +15,7 @@ T = TypeVar("T")
 class Grid(list[list[T]]):
     @classmethod
     def from_str(cls, s: str, init: Callable[[str], T] = int, delimiter="") -> Grid[T]:
-        grid: list[list[T]] = cls()
+        grid: Grid[T] = cls()
 
         for line in s.splitlines():
             grid.append(
@@ -22,8 +25,30 @@ class Grid(list[list[T]]):
         return grid
 
     @classmethod
+    def from_dict(cls, mapping: dict[tuple[int, int], T], fill_value=None) -> Grid[T]:
+        # find height and width
+        height = 0
+        width = 0
+        for x, y in mapping.keys():
+            height = max(y, height)
+            width = max(x, width)
+
+        grid: Grid[T] = cls()
+        for y in range(height + 1):
+            grid.append(
+                [
+                    mapping[(x, y)]
+                    if isinstance(mapping, defaultdict)
+                    else mapping.get((x, y), fill_value)
+                    for x in range(width + 1)
+                ]
+            )
+
+        return grid
+
+    @classmethod
     def of_zeroes(cls, height: int, width: int) -> Grid[int]:
-        grid: list[list[int]] = cls()
+        grid: Grid[int] = cls()
 
         for _ in range(height):
             grid.append([0 for _ in range(width)])
@@ -32,7 +57,7 @@ class Grid(list[list[T]]):
 
     @classmethod
     def of(cls, init: Callable[[], T], *, height: int, width: int) -> Grid[T]:
-        grid: list[list[T]] = cls()
+        grid: Grid[T] = cls()
 
         for _ in range(height):
             grid.append([init() for _ in range(width)])
@@ -65,7 +90,7 @@ class Grid(list[list[T]]):
         l = []
 
         for x, row in enumerate(self):
-            for y , el in enumerate(row):
+            for y, el in enumerate(row):
                 l.append(((x, y), el))
 
         return l
@@ -89,6 +114,73 @@ class Grid(list[list[T]]):
                 n[row, col] = self[row][col]
 
         return n
+
+    def x_neighbors(self, point: tuple[int, int]) -> dict[tuple[int, int], T]:
+        if not hasattr(self, "_x_neighbors"):
+            self._x_neighbors = {}
+
+        if point not in self._x_neighbors:
+            x, y = point
+
+            n = {}
+
+            for offset in (-1, 1):
+                row = x
+                col = y + offset
+
+                if row < 0 or col < 0:
+                    continue
+
+                if row >= self.height() or col >= self.width():
+                    continue
+
+                if (row, col) == point:
+                    continue
+
+                n[row, col] = self[row][col]
+
+            self._x_neighbors[point] = n
+
+        return self._x_neighbors[point]
+
+    def y_neighbors(self, point: tuple[int, int]) -> dict[tuple[int, int], T]:
+        if not hasattr(self, "_y_neighbors"):
+            self._y_neighbors = {}
+
+        if point not in self._y_neighbors:
+            x, y = point
+
+            n = {}
+
+            for offset in (-1, 1):
+                row = x + offset
+                col = y
+
+                if row < 0 or col < 0:
+                    continue
+
+                if row >= self.height() or col >= self.width():
+                    continue
+
+                if (row, col) == point:
+                    continue
+
+                n[row, col] = self[row][col]
+
+            self._y_neighbors[point] = n
+
+        return self._y_neighbors[point]
+
+    def modify(self, apply) -> Grid:
+        return Grid([[apply(cell) for cell in row] for row in self])
+
+    def append_right(self, grid: Grid) -> Grid:
+        return Grid(
+            [[cell for cell in (row_1 + row_2)] for row_1, row_2 in zip(self, grid)]
+        )
+
+    def append_below(self, grid: Grid) -> Grid:
+        return Grid([[cell for cell in row] for row in chain(self, grid)])
 
     def __str__(self):
         x = ""
@@ -205,3 +297,8 @@ if __name__ == "__main__":
         (1, 3): "I",
         (1, 4): "J",
     }
+
+    # ------ Grid.from_dict ----------
+    cars = Grid.from_dict({(0, 0): "Toyota", (5, 10): "Tesla"}, fill_value="Honda")
+    print(cars)
+    assert cars[10][5] == "Tesla"
