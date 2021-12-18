@@ -124,7 +124,7 @@ class Grid(list[list[T]]):
 
             n = {}
 
-            for offset in (-1, 1):
+            for offset in (1, -1):
                 row = x
                 col = y + offset
 
@@ -152,7 +152,7 @@ class Grid(list[list[T]]):
 
             n = {}
 
-            for offset in (-1, 1):
+            for offset in (1, -1):
                 row = x + offset
                 col = y
 
