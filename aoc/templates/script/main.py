@@ -1,5 +1,24 @@
 from __future__ import annotations
 import aoc
+from collections import defaultdict, Counter
+from itertools import (
+    combinations,
+    count,
+    permutations,
+    combinations_with_replacement,
+    product,
+    cycle,
+    accumulate,
+    pairwise
+)
+from more_itertools import windowed
+import terminology
+from functools import cache
+import re
+from pathlib import Path
+import operator
+import math
+import sys
 
 
 # fmt: off
