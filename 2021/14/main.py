@@ -84,13 +84,9 @@ def counts(*, rules: str, text: str, steps: int) -> dict:
 
     counter = Counter({text[0]: 1})
     for a, b in pairwise(text):
-        c = translations.get(a + b)
-        if c:
-            counter.update(counts(rules=rules, text=a + c + b, steps=steps - 1))
-            counter[a] -= 1
-        else:
-            counter[a] += 1
-            counter[b] += 1
+        c = translations.get(a + b, '')
+        counter.update(counts(rules=rules, text=a + c + b, steps=steps - 1))
+        counter[a] -= 1
 
     return counter
 
