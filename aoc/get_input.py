@@ -56,15 +56,16 @@ def _get_input(script_filename: str) -> str:
 
     _download_prompt(script)
 
-    return _download_input(script)
+    input, downloaded = _download_input(script)
+    if downloaded:
+        sys.exit(0)
+    return input
 
 def _download_prompt(script):
     # Create prompt file if it doesn't already exist
     script.prompt_file.touch(exist_ok=True)
 
-    prompt_file = script.prompt_file.read_text().strip()
-
-    if "Part Two" not in prompt_file:
+    if "Part Two" not in script.prompt_file.read_text().strip():
         response = aoc.api.get(script.prompt_url)
 
         html = "\n\n".join([a.html for a in response.html.find("article")])
@@ -75,9 +76,10 @@ def _download_prompt(script):
         script.prompt_file.write_text(_html_to_markdown(html))
 
 
-def _download_input(script) -> str:
+def _download_input(script) -> tuple[str, bool]:
+    downloaded = False
     # If puzzle input file is empty...
-    if not script.input_file.read_text().strip():
+    if not (script_content := script.input_file.read_text().strip()):
         import pendulum  # pendulum is also slow to import
 
         puzzle_start = pendulum.datetime(
@@ -92,8 +94,9 @@ def _download_input(script) -> str:
         response.raise_for_status()
         script.input_file.write_text(response.text)
         print(f"Downloaded input to {str(script.input_file)}")
+        downloaded = True
 
-    return script.input_file.read_text().strip()
+    return script_content, downloaded
 
 
 def _html_to_markdown(_html):
