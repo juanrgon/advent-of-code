@@ -75,10 +75,9 @@ def score(s):
     }
 
     for c in s:
-        closer = chars.get(c)
         last_open = open[-1] if open else ""
 
-        if closer:
+        if closer := chars.get(c):
             if closer != last_open:
                 match c:
                     case ")":
@@ -108,8 +107,7 @@ def complete(s):
     score = 0
 
     for c in reversed(s):
-        closer = opens.get(c)
-        if closer:
+        if closer:= opens.get(c):
             score *= 5
             match closer:
                 case ")":
