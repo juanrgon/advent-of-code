@@ -64,7 +64,7 @@ def _submit(*, script_filename: str, part: int, solution):
             print(f"Visit {script.part_2_url} for part 2\n")
             sys.exit(0)
         else:
-            script.day += script.day  # gross, but pratical
+            script.day = str(int(script.day) + 1)  # gross, but practical
             print(f"Visit {script.prompt_url} for Day {script.day}\n")
 
     else:
