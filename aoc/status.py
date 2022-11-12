@@ -23,6 +23,9 @@ def mark_completed(year: int, day: int, part: int):
 
 
 def get() -> Status:
+    if not _status_file().exists():
+        _status_file().touch()
+
     return yaml.safe_load(_status_file().read_text()) or {}
 
 
@@ -33,3 +36,7 @@ def save(status: Status):
 @cache
 def _status_file() -> Path:
     return Path(__file__).parent.parent / ".status.yaml"
+
+
+class StatusFileMissing(Exception):
+    pass
