@@ -38,7 +38,7 @@ TESTS_2 = [
 @aoc.get_input
 @aoc.tests(TESTS_1)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str]):
+def part_1(raw: str, ints: list[int], strs: list[str], paragraphs: list[aoc.Paragraph]):
     return 0
 
 
@@ -46,7 +46,7 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.get_input
 @aoc.tests(TESTS_2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str]):
+def part_2(raw: str, ints: list[int], strs: list[str], paragraphs: list[aoc.Paragraph]):
     return 0
 
 

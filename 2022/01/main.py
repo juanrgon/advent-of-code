@@ -66,11 +66,10 @@ TESTS_2 = [
 @aoc.get_input
 @aoc.tests(TESTS_1)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str]):
-    elfs = [x for x in raw.split("\n\n")]
+def part_1(raw: str, ints: list[int], strs: list[str], paragraphs: list[aoc.Paragraph]) -> int:
     m = 0
-    for elf in elfs:
-        cals = [int(x) for x in elf.splitlines()]
+    for p in paragraphs:
+        cals = p.ints()
         m = max(m, sum(cals))
     return m
 
@@ -79,12 +78,10 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.get_input
 @aoc.tests(TESTS_2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str]):
-    elfs = [x for x in raw.split("\n\n")]
-
+def part_2(raw: str, ints: list[int], strs: list[str], paragraphs: list[aoc.Paragraph]):
     c = []
-    for elf in elfs:
-        cals = [int(x) for x in elf.splitlines()]
+    for p in paragraphs:
+        cals = p.ints()
         c.append(sum(cals))
     return sum(sorted(c, reverse=True)[:3])
 
