@@ -66,24 +66,15 @@ TESTS_2 = [
 @aoc.get_input
 @aoc.tests(TESTS_1)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str], paragraphs: list[aoc.Paragraph]) -> int:
-    m = 0
-    for p in paragraphs:
-        cals = p.ints()
-        m = max(m, sum(cals))
-    return m
-
+def part_1(raw: aoc.String, ints: aoc.Integers, strs: list[aoc.String], paragraphs: list[aoc.Paragraph]) -> int:
+    return max(p.ints.sum for p in paragraphs)
 
 @aoc.submit(part=2)
 @aoc.get_input
 @aoc.tests(TESTS_2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str], paragraphs: list[aoc.Paragraph]):
-    c = []
-    for p in paragraphs:
-        cals = p.ints()
-        c.append(sum(cals))
-    return sum(sorted(c, reverse=True)[:3])
+def part_2(raw: aoc.String, ints: aoc.Integers, strs: list[aoc.String], paragraphs: list[aoc.Paragraph]):
+    return sum(sorted([p.ints.sum for p in paragraphs], reverse=True)[:3])
 
 
 if __name__ == "__main__":

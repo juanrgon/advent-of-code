@@ -5,6 +5,8 @@ from .submit import submit
 from .get_input import get_input
 from .grid import Grid
 from .paragraph import Paragraph
+from .string import String
+from .integers import Integers
 
 __all__ = [
     "tests",
@@ -14,4 +16,6 @@ __all__ = [
     "get_input",
     "Grid",
     "Paragraph",
+    "String",
+    "Integers",
 ]
