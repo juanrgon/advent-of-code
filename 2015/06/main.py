@@ -62,7 +62,7 @@ class Light:
 @aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str]):
+def part_1(raw: str, ints: list[int], strs: list[str], **kwargs):
 
     grid = aoc.Grid.of(Light, height=1000, width=1000)
 
@@ -87,7 +87,7 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.get_input
 @aoc.tests(TEST2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str]):
+def part_2(raw: str, ints: list[int], strs: list[str], **kwargs):
     grid = aoc.Grid.of(Light, height=1000, width=1000)
 
     for line in strs:

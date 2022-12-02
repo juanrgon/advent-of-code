@@ -49,7 +49,7 @@ import aoc
 @aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str]):
+def part_1(raw: str, ints: list[int], strs: list[str], **kwargs):
 
     bit_counts = defaultdict(lambda: {"0": 0, "1": 1})
 
@@ -70,7 +70,7 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.get_input
 @aoc.tests(TEST2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str]):
+def part_2(raw: str, ints: list[int], strs: list[str], **kwargs):
     oxy = strs
     co2 = strs
 

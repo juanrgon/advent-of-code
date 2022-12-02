@@ -71,7 +71,7 @@ enarar
 @aoc.get_input
 @aoc.tests(TESTS_1)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str]):
+def part_1(raw: str, ints: list[int], strs: list[str], **kwargs):
     cols = []
     for i in range(len(strs[0])):
         cols.append([])
@@ -91,7 +91,7 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.get_input
 @aoc.tests(TESTS_2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str]):
+def part_2(raw: str, ints: list[int], strs: list[str], **kwargs):
     cols = []
     for i in range(len(strs[0])):
         cols.append([])

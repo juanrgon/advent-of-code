@@ -48,7 +48,7 @@ TESTS_2 = [
 @aoc.get_input
 @aoc.tests(TESTS_1)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str]):
+def part_1(raw: str, ints: list[int], strs: list[str], **kwargs):
     c = 0
     for l in strs:
         nums = [int(x.strip()) for x in l.split()]
@@ -64,7 +64,7 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.get_input
 @aoc.tests(TESTS_2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str]):
+def part_2(raw: str, ints: list[int], strs: list[str], **kwargs):
     triangles = []
     a, b, c = [], [], []
     for i, num in enumerate(ints):

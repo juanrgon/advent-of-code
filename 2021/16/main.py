@@ -63,7 +63,7 @@ TESTS_2 = [
 @aoc.get_input
 @aoc.tests(TESTS_1)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str]):
+def part_1(raw: str, ints: list[int], strs: list[str], **kwargs):
     binary = []
     for d in raw:
         binary.append(bin(int(str(d), 16)).removeprefix("0b").zfill(4))
@@ -195,7 +195,7 @@ def eval(bits: str, max_packets=1) -> tuple[int, int]:
 @aoc.get_input
 @aoc.tests(TESTS_2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str]):
+def part_2(raw: str, ints: list[int], strs: list[str], **kwargs):
     binary = []
     for d in raw:
         binary.append(bin(int(str(d), 16)).removeprefix("0b").zfill(4))

@@ -157,7 +157,7 @@ class Cave:
 @aoc.get_input
 @aoc.tests(TESTS_1)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str]):
+def part_1(raw: str, ints: list[int], strs: list[str], **kwargs):
     caves: dict[str, Cave] = {}
 
     start = caves.setdefault("start", Cave(name="start", reachable=[]))
@@ -184,7 +184,7 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.get_input
 @aoc.tests(TESTS_2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str]):
+def part_2(raw: str, ints: list[int], strs: list[str], **kwargs):
     caves: dict[str, Cave] = {}
 
     start = caves.setdefault("start", Cave(name="start", reachable=[]))

@@ -59,7 +59,7 @@ CN -> C
 @aoc.get_input
 @aoc.tests(TESTS_1)
 @aoc.parse_text
-def part_1(raw: str, ints: list[int], strs: list[str]):
+def part_1(raw: str, ints: list[int], strs: list[str], **kwargs):
     template , rules = raw.split('\n\n')
     c = counts(rules=rules, text=template, steps=10)
     return max(c.values()) - min(c.values())
@@ -69,7 +69,7 @@ def part_1(raw: str, ints: list[int], strs: list[str]):
 @aoc.get_input
 @aoc.tests(TESTS_2)
 @aoc.parse_text
-def part_2(raw: str, ints: list[int], strs: list[str]):
+def part_2(raw: str, ints: list[int], strs: list[str], **kwargs):
     template , rules = raw.split('\n\n')
     c = counts(rules=rules, text=template, steps=40)
     return max(c.values()) - min(c.values())
