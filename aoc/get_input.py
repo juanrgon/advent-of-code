@@ -2,6 +2,7 @@ from .script import Script
 import re
 import html
 import sys
+import terminology
 from functools import cache
 from typing import Callable, TypeVar
 import aoc.status
@@ -58,6 +59,7 @@ def _get_input(script_filename: str) -> str:
 
     input, downloaded = _download_input(script)
     if downloaded:
+        print(terminology.in_cyan(f"\nSee the prompt at {script.prompt_url}"))
         sys.exit(0)
     return input
 
