@@ -1,25 +1,5 @@
 from __future__ import annotations
 import aoc
-from collections import defaultdict, Counter
-from itertools import (
-    combinations,
-    count,
-    permutations,
-    combinations_with_replacement,
-    product,
-    cycle,
-    accumulate,
-    pairwise,
-)
-from more_itertools import windowed
-import terminology
-from functools import cache
-import re
-from pathlib import Path
-import operator
-import math
-import sys
-
 
 # fmt: off
 TESTS_1 = [
@@ -40,7 +20,7 @@ C Z
 # fmt: on
 
 
-@aoc.solution(part=1, tests=TESTS_1)
+@aoc.solution(1, TESTS_1)
 def part_1(
     raw: aoc.String,
     ints: aoc.Integers,
@@ -66,7 +46,7 @@ def part_1(
     return score
 
 
-@aoc.solution(part=2, tests=TESTS_2)
+@aoc.solution(2, TESTS_2)
 def part_2(
     raw: aoc.String,
     ints: aoc.Integers,
