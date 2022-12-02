@@ -32,7 +32,7 @@ class Script:
             day=day,
             year=year,
             path=path,
-            prompt_file=path.parent / "prompt.md",
+            prompt_file=path.parent / "readme.md",
             input_file=path.parent / "input",
             prompt_url=f"{url}",
             puzzle_url=f"{url}/input",

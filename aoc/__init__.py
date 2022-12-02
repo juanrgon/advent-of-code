@@ -7,6 +7,7 @@ from .grid import Grid
 from .paragraph import Paragraph
 from .string import String
 from .integers import Integers
+from .solution import solution
 
 __all__ = [
     "tests",
@@ -18,4 +19,5 @@ __all__ = [
     "Paragraph",
     "String",
     "Integers",
+    "solution",
 ]
