@@ -1,7 +1,7 @@
 from .parse_text import parse_text
 from .get_input import get_input
 from .tests import tests as run_tests
-from .submit import submit
+from .submit import submit as submit_to_aoc
 
 
 def solution(part: int, tests=[], submit=False):
@@ -12,7 +12,7 @@ def solution(part: int, tests=[], submit=False):
             f = get_input(f)
 
             if submit:
-                f = submit(part=part)(f)
+                f = submit_to_aoc(part=part)(f)
 
             return f(*args, **kwargs)
 
