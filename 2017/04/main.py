@@ -33,7 +33,7 @@ import aoc
 @aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: List[int], strs: List[str], **kwargs):
     return len([p for p in strs if len(set(p.split())) == len(p.split())])
 
 
@@ -41,7 +41,7 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
 @aoc.get_input
 @aoc.tests(TEST2)
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: List[int], strs: List[str], **kwargs):
     _s = []
     for p in strs:
         _s.append(" ".join([''.join(sorted(w)) for w in p.split()]))

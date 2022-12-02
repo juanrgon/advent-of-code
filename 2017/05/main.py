@@ -25,7 +25,7 @@ import aoc
 @aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: List[int], strs: List[str], **kwargs):
     position = 0
     steps = 0
 
@@ -42,7 +42,7 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
 @aoc.get_input
 @aoc.tests(TEST2)
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: List[int], strs: List[str], **kwargs):
     position = 0
     steps = 0
 

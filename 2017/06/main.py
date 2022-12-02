@@ -23,12 +23,11 @@ import itertools
 
 import aoc
 
-
 @aoc.submit(part=1)
 @aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: List[int], strs: List[str], **kwargs):
     banks = aoc.ints(strs[0])
 
     mem = set(" ".join([str(b) for b in banks]))
@@ -58,7 +57,7 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
 @aoc.get_input
 @aoc.tests(TEST2)
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: List[int], strs: List[str], **kwargs):
     banks = aoc.ints(strs[0])
 
     mem = set(" ".join([str(b) for b in banks]))

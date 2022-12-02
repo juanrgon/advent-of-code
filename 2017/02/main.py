@@ -26,7 +26,7 @@ import aoc
 @aoc.get_input
 @aoc.tests(TEST)
 @aoc.parse_text
-def part_1(raw: str, ints: List[int], strs: List[str]):
+def part_1(raw: str, ints: List[int], strs: List[str], **kwargs):
     chk = 0
     for l in strs:
         nums = aoc.ints(l)
@@ -38,7 +38,7 @@ def part_1(raw: str, ints: List[int], strs: List[str]):
 @aoc.get_input
 @aoc.tests(TEST2)
 @aoc.parse_text
-def part_2(raw: str, ints: List[int], strs: List[str]):
+def part_2(raw: str, ints: List[int], strs: List[str], **kwargs):
     s = 0
 
     for line in strs:
