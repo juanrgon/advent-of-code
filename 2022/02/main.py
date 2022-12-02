@@ -40,10 +40,7 @@ C Z
 # fmt: on
 
 
-@aoc.submit(part=1)
-@aoc.get_input
-@aoc.tests(TESTS_1)
-@aoc.parse_text
+@aoc.solution(part=1, tests=TESTS_1)
 def part_1(
     raw: aoc.String,
     ints: aoc.Integers,
@@ -69,10 +66,7 @@ def part_1(
     return score
 
 
-@aoc.submit(part=2)
-@aoc.get_input
-@aoc.tests(TESTS_2)
-@aoc.parse_text
+@aoc.solution(part=2, tests=TESTS_2)
 def part_2(
     raw: aoc.String,
     ints: aoc.Integers,
