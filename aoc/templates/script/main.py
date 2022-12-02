@@ -1,52 +1,36 @@
 from __future__ import annotations
 import aoc
-from collections import defaultdict, Counter
-from itertools import (
-    combinations,
-    count,
-    permutations,
-    combinations_with_replacement,
-    product,
-    cycle,
-    accumulate,
-    pairwise
-)
-from more_itertools import windowed
-import terminology
-from functools import cache
-import re
-from pathlib import Path
-import operator
-import math
-import sys
-
 
 # fmt: off
 TESTS_1 = [
 ("""
-""", -42),
+""", 8675309),
 ]
 
 TESTS_2 = [
 ("""
-""", -42),
+""", 42),
 ]
 # fmt: on
 
 
-@aoc.submit(part=1)
-@aoc.get_input
-@aoc.tests(TESTS_1)
-@aoc.parse_text
-def part_1(raw: aoc.String, ints: aoc.Integers, strs: list[aoc.String], paragraphs: list[aoc.Paragraph]):
+@aoc.solution(part=1, tests=TESTS_1)
+def part_1(
+    raw: aoc.String,
+    ints: aoc.Integers,
+    strs: list[aoc.String],
+    paragraphs: list[aoc.Paragraph],
+):
     return 0
 
 
-@aoc.submit(part=2)
-@aoc.get_input
-@aoc.tests(TESTS_2)
-@aoc.parse_text
-def part_2(raw: aoc.String, ints: aoc.Integers, strs: list[aoc.String], paragraphs: list[aoc.Paragraph]):
+@aoc.solution(part=2, tests=TESTS_2)
+def part_2(
+    raw: aoc.String,
+    ints: aoc.Integers,
+    strs: list[aoc.String],
+    paragraphs: list[aoc.Paragraph],
+):
     return 0
 
 
