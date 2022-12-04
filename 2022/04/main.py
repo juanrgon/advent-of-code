@@ -39,10 +39,10 @@ def part_1(
         a, b = l.split(",")
 
         i, j = a.split("-")
-        i, j = int(i), int(j)
+        i, j = i.as_int, j.as_int
 
         x, y = b.split("-")
-        x, y = int(x), int(y)
+        x, y = x.as_int, y.as_int
 
         if (x <= i <= y and x <= j <= y) or (i <= x <= j and i <= y <= j):
             s += 1
@@ -63,10 +63,10 @@ def part_2(
         a, b = l.split(",")
 
         i, j = a.split("-")
-        i, j = int(i), int(j)
+        i, j = i.as_int, j.as_int
 
         x, y = b.split("-")
-        x, y = int(x), int(y)
+        x, y = x.as_int, y.as_int
 
         if x <= i <= y or x <= j <= y or i <= x <= j and i <= y <= j:
             s += 1

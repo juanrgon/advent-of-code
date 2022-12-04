@@ -5,3 +5,7 @@ class String(str):
 
     def split(self, sep: str = " ") -> list["String"]:
         return [String(s) for s in super().split(sep)]
+
+    @property
+    def as_int(self) -> int:
+        return int(self)
