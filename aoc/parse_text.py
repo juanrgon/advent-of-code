@@ -10,7 +10,7 @@ from .string import String
 
 
 def parse_text(
-    fn: Callable[[str, list[int], list[str]], int | str]
+    fn: Callable[[str, list[int], list[str], list[list[str]]], int | str]
 ) -> Callable[[str], int | str]:
     @functools.wraps(fn)
     def fn_override(raw: str | int) -> int | str:

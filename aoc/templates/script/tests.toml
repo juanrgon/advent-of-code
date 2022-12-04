@@ -1,0 +1,9 @@
+[[1]]
+input = """
+"""
+solution = 8675309
+
+[[2]]
+input = """
+"""
+solution = 42

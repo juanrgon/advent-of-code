@@ -20,9 +20,15 @@ def new(year: str, day: str):
     if not day:
         day = click.prompt(f"Day", default=_get_day(year))
 
+    # Create the script
     script_file = _new_script(year=year, day=day)
-
     print(f"Created script {script_file}!")
+
+    # Create the test file
+    test_file = script_file.parent / "tests.toml"
+    test_file.write_text(
+        (aoc.paths.AOC_PKG / "templates" / "script" / test_file.name).read_text()
+    )
 
     if "EDITOR" in os.environ:
         subprocess.Popen(

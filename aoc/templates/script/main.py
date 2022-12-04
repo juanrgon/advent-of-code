@@ -1,20 +1,8 @@
 from __future__ import annotations
 import aoc
 
-# fmt: off
-TESTS_1 = [
-("""
-""", 8675309),
-]
 
-TESTS_2 = [
-("""
-""", 42),
-]
-# fmt: on
-
-
-@aoc.solution(part=1, tests=TESTS_1)
+@aoc.solution(1)
 def part_1(
     raw: aoc.String,
     ints: aoc.Integers,
@@ -24,7 +12,7 @@ def part_1(
     return 0
 
 
-@aoc.solution(part=2, tests=TESTS_2)
+@aoc.solution(2)
 def part_2(
     raw: aoc.String,
     ints: aoc.Integers,
