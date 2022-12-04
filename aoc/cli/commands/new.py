@@ -70,8 +70,8 @@ def _new_script(year: str, day: str, overwrite: bool = False) -> Path:
     script = Script.from_year_day(year=year, day=day)
     script_dir = script.path.parent
 
-    if script_dir.parent.exists() and not overwrite:
-        if pendulum.now() > pendulum.datetime(year=int(year), month=12, day=int(day)):
+    if script_dir.exists() and not overwrite:
+        if pendulum.now() < pendulum.datetime(year=int(year), month=12, day=int(day)):
             print("Allow override of solution file, because script date in the future")
         else:
             raise RuntimeError(f"Script already exists for {year}-{day}!!!")
