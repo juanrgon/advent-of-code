@@ -25,7 +25,6 @@ def part_1(
     return s
 
 
-
 @aoc.solution(2)
 def part_2(
     raw: aoc.String,
