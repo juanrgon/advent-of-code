@@ -81,7 +81,7 @@ def _download_prompt(script):
 def _download_input(script) -> tuple[str, bool]:
     downloaded = False
     # If puzzle input file is empty...
-    if not (script_content := script.input_file.read_text().strip()):
+    if not (script_content := script.input_file.read_text()):
         import pendulum  # pendulum is also slow to import
 
         puzzle_start = pendulum.datetime(

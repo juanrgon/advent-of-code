@@ -16,7 +16,7 @@ def parse_text(
     def fn_override(raw: str | int) -> int | str:
         text = dedent(str(raw)).strip()
         return fn(
-            raw=String(text),
+            raw=raw,
             ints=Integers(ints(text)),
             strs=[String(s) for s in text.splitlines()],
             paragraphs=Paragraph.list_from_str(text),
