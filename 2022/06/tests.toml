@@ -1,0 +1,55 @@
+[[1]]
+input = """
+mjqjpqmgbljsphdztnvjfqwrcgsmlb
+"""
+solution = 7
+
+[[1]]
+input = """
+bvwbjplbgvbhsrlpgdmjqwftvncz
+"""
+solution = 5
+
+[[1]]
+input = """
+nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg
+"""
+solution = 10
+
+[[1]]
+input = """
+zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw
+"""
+solution = 11
+
+[[2]]
+input = """
+mjqjpqmgbljsphdztnvjfqwrcgsmlb
+"""
+solution = 19
+
+[[2]]
+input = """
+bvwbjplbgvbhsrlpgdmjqwftvncz
+"""
+solution = 23
+
+[[2]]
+input = """
+nppdvjthqldpwncqszvftbrmjlhg
+"""
+solution = 23
+
+[[2]]
+input = """
+nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg
+"""
+solution = 29
+
+
+
+[[2]]
+input = """
+zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw
+"""
+solution = 26
