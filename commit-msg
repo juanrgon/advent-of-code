@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+###################
+# Git hook to add a random emoji to the end of the commit message
+#
+# Install this commit-msg hook by running:
+#   ln -s ../../.git/hooks/commit-msg .git/hooks/commit-msg
+###################
+
+# Define an array of Christmas-themed emojis
+christmas_emojis=(🎄 🎅 🎁 ☃️ ❄️ 🌟 🦌)
+
+# Choose a random emoji from the array
+chosen_emoji=${christmas_emojis[$RANDOM % ${#christmas_emojis[@]}]}
+
+# Get the current commit message
+commit_message=$(cat "$1")
+
+# Append the chosen emoji to the commit message
+echo "${commit_message} ${chosen_emoji}" > "$1"
