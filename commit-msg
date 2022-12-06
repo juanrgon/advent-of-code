@@ -16,5 +16,13 @@ chosen_emoji=${christmas_emojis[$RANDOM % ${#christmas_emojis[@]}]}
 # Get the current commit message
 commit_message=$(cat "$1")
 
+# Check if the passed in string ends with any of the Christmas emojis
+for emoji in "${christmas_emojis[@]}"; do
+  if [[ "$commit_message" == *"$emoji" ]]; then
+    # If the string ends with a Christmas emoji, exit
+    exit 0
+  fi
+done
+
 # Append the chosen emoji to the commit message
 echo "${commit_message} ${chosen_emoji}" > "$1"
