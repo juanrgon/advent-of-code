@@ -4,7 +4,7 @@
 # Git hook to add a random emoji to the end of the commit message
 #
 # Install this commit-msg hook by running:
-#   ln -s ../../.git/hooks/commit-msg .git/hooks/commit-msg
+#   ln -s ../../commit-msg .git/hooks/commit-msg
 ###################
 
 # Define an array of Christmas-themed emojis

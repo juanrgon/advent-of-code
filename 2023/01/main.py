@@ -79,19 +79,13 @@ def part_2(
     for s in strs:
         positions = {}
 
-        for n in numstrs:
-            print(n, s)
+        for n in nums_to_ints:
             if n in s:
-                print(s)
                 for index in get_all_indexes(s, n):
-                    print(index, n, s)
                     positions[index] = nums_to_ints[n]
 
-        print(s)
-        print(positions)
         first = positions[min(positions.keys())]
         last = positions[max(positions.keys())]
-        print((first * 10 + last))
         nums.append(first * 10 + last)
 
     return sum(nums)
