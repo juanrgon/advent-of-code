@@ -57,9 +57,8 @@ def part_2(
         positions = {}
 
         for n in nums_to_ints:
-            if n in s:
-                for index in get_all_indexes(s, n):
-                    positions[index] = nums_to_ints[n]
+            for index in get_all_indexes(s, n):
+                positions[index] = nums_to_ints[n]
 
         first = positions[min(positions.keys())]
         last = positions[max(positions.keys())]
