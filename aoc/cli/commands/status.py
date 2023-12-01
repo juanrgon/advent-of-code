@@ -1,8 +1,5 @@
 import click
-import requests
-import pendulum
 import aoc.status
-from pathlib import Path
 import terminology
 import aoc.api
 
@@ -19,10 +16,7 @@ def status(refresh_from_site: bool):
     if refresh_from_site or not status:
         status = {}
 
-        today = pendulum.now("US/Eastern")
-        most_recent_year = today.year if today.month == 12 else today.year - 1
-
-        response = aoc.api.get(f"https://adventofcode.com/events")
+        response = aoc.api.get("https://adventofcode.com/events")
         response.raise_for_status()
 
         for event in response.html.find(".eventlist-event"):
@@ -36,7 +30,7 @@ def status(refresh_from_site: bool):
                 day = int(star / 2) + 1
                 status[year][day] = star % 2 + 1
 
-        print(f"Loading status from adventofcode.com to disk\n")
+        print("Loading status from adventofcode.com to disk\n")
         aoc.status.save(status)
 
     for year in sorted(status):
