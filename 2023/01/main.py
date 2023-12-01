@@ -30,29 +30,6 @@ def part_2(
 ):
     nums = []
 
-    numstrs = [
-        "one",
-        "two",
-        "three",
-        "four",
-        "five",
-        "six",
-        "seven",
-        "eight",
-        "nine",
-        "zero",
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-    ]
-
     nums_to_ints = {
         "one": 1,
         "two": 2,
