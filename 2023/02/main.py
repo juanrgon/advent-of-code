@@ -40,7 +40,6 @@ def part_2(
     power_sum = 0
     for i, game in enumerate(strs):
         _, rounds = game.split(": ")
-        valid = True
         max_red = 0
         max_blue = 0
         max_green = 0
@@ -57,8 +56,7 @@ def part_2(
                 if (color == "red"):
                     max_red = max(max_red, int(num))
 
-        if valid:
-            power_sum += max_red * max_green * max_blue
+        power_sum += max_red * max_green * max_blue
 
     return power_sum
 
