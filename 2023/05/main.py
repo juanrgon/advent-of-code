@@ -110,9 +110,14 @@ def part_2(
     for paragraph in paragraphs:
         if paragraph[0].startswith("seeds"):
             seed_ranges = paragraph[0].split(" ")[1:]
-            seeds=[]
+            seeds = []
             for k in range(len(seed_ranges) // 2):
-                seeds.append([int(seed_ranges[k * 2]), int(seed_ranges[k * 2 + 1]) + int(seed_ranges[k * 2])])
+                seeds.append(
+                    [
+                        int(seed_ranges[k * 2]),
+                        int(seed_ranges[k * 2 + 1]) + int(seed_ranges[k * 2]),
+                    ]
+                )
 
         if paragraph[0] == ("seed-to-soil map:"):
             maps.append(get_map(paragraph[1:]))
@@ -142,8 +147,6 @@ def part_2(
                     all_locations.append(i)
             all_locations.sort()
 
-
-    lowest = None
     for seed in all_locations:
         location = seed
         seed = int(seed)
@@ -153,8 +156,6 @@ def part_2(
         for seed_range in seeds:
             if seed >= seed_range[0] and seed < seed_range[1]:
                 return location
-
-    return lowest
 
 
 if __name__ == "__main__":
