@@ -52,12 +52,10 @@ def part_2(
     for r in sorted(scores.keys()):
         for hand in sorted(scores[r], key=key_2):
             best_hands.append(hand)
-    print('---------------')
 
     sum = 0
     for i, hand in enumerate(best_hands):
         bid = hand_sets_to_bids[hand]
-        print(hand)
         sum = sum + bid * (i + 1)
 
     return sum
