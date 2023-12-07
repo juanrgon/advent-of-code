@@ -8,7 +8,7 @@ def part_1(
     strs: list[aoc.String],
     paragraphs: list[aoc.Paragraph],
 ):
-    return 0
+    print(raw)
 
 
 @aoc.solution(2)
@@ -18,7 +18,7 @@ def part_2(
     strs: list[aoc.String],
     paragraphs: list[aoc.Paragraph],
 ):
-    return 0
+    print(raw)
 
 
 if __name__ == "__main__":
